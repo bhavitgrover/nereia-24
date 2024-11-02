@@ -1,0 +1,70 @@
+<%- layout('layout') %>
+<div onclick="hideModal(event)" id="modal" class="w-[100vw] h-[100vh] flex flex-col items-center justify-center absolute bg-[rgba(0,0,0,0.5)]">
+    <div class="w-[40vw] h-[50vh] bg-background rounded-lg flex flex-col items-center justify-center">
+        <p class="mb-[2vh]">Upload Image</p>
+        <form action="/discoveries/uploadAvatar" enctype="multipart/form-data" method="post" class="flex flex-col items-center justify-center">
+            <input name="file" type="file" hidden onchange="previewImage()" accept="image/*" id="img">
+            <label for="img">
+                <i class="fa-solid fa-upload text-[5vw]"></i>
+            </label>
+            <img style="object-fit: cover; display: none;" class="w-[5vw] rounded-full aspect-square" id="preview" src="" alt="">
+            <button id="btn" style="display: none;" onmouseover="handleAnimation()" onmouseout="handleOutAnimation()" class="flex mt-[2vh] flex-row items-center justify-center gap-2 px-[1vw] py-[2vh] border-none w-[7vw] text-[#fff] bg-accent-dark" type="submit">
+                <p>Submit</p>
+                <div id="line" class="w-0 h-[2px] bg-[#fff]"></div>
+            </button>
+        </form>
+    </div>
+</div>
+<div class="container flex flex-row w-[100vw] min-h-[100vh]">
+    <div class="profile">
+        <div class="w-[20vw] flex flex-col items-center">
+            <img onclick="showModal()" src="/avatar.png" alt="Profile" class="profile__header__img w-[7vw] mt-[8vh]">
+            <div class="flex flex-col items-center mt-3">
+                <h1 class="text-xl font-semibold text-accent-dark"><%= user.fname %> <%= user.lname %></h1>
+                <p class="text-sm text-accent-light"><%= user.role %></p>
+            </div>
+        </div>
+    </div>
+    <div class="discoveries w-[80vw] bg-accent-dark"></div>
+</div>
+
+<style>
+    #modal {
+        display: none;
+    }
+</style>
+
+<script>
+    function showModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = 'flex';
+
+    }
+    function hideModal(event) {
+        const modal = document.getElementById('modal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+    function previewImage() {
+        console.log('damn')
+        const [file] = document.getElementById('img').files
+        console.log(file)
+        if (file) {
+            document.getElementById('preview').src = URL.createObjectURL(file)
+            document.getElementById('preview').style.display = 'block';
+            document.querySelector('label i').style.display = 'none';
+            document.getElementById('btn').style.display = 'flex';
+        }
+    }
+    function handleAnimation() {
+        const line = document.getElementById('line');
+        line.style.transition = 'width 0.3s ease-in-out';
+        line.style.width = '1.5vw';
+    }
+    function handleOutAnimation() {
+        const line = document.getElementById('line');
+        line.style.transition = 'width 0.3s ease-in-out';
+        line.style.width = '0';
+    }
+</script>

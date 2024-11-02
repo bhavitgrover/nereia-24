@@ -15,7 +15,8 @@ const express = require('express'),
 const indexRouter = require('./routers/indexRouter'),
       loginRouter = require('./routers/loginRouter'),
       registerRouter = require('./routers/registerRouter'),
-      chatRouter = require('./routers/chatRouter')
+      chatRouter = require('./routers/chatRouter'),
+      discoveriesRouter = require('./routers/discoveriesRouter')
 
 app.use(express.static('public'))
 app.engine('ejs', engine)
@@ -40,6 +41,7 @@ app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, registerRouter)
 app.use('/chat', ensureAuthenticated, chatRouter)
+app.use('/discoveries', ensureAuthenticated, discoveriesRouter)
 
 
 app.get('/logout', (req, res) => {
