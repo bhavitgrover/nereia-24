@@ -10,10 +10,10 @@
             <p class="text-red-500 font-semibold"><%= error %></p>
         <% } %>
         <div class="flex flex-row w-[100%] h-[10vh]">
-            <div id="scientist" onclick="setScientist()" class="w-[50%] flex items-center justify-center bg-accent-light border-accent-light border-r-0">Scientist</div>
+            <div id="researcher" onclick="setResearcher()" class="w-[50%] flex items-center justify-center bg-accent-light border-accent-light border-r-0">Researcher</div>
             <div id="diver" onclick="setDiver()" class="w-[50%] flex items-center justify-center bg-transparent border-2 border-accent-light border-l-0">Diver</div>
         </div>
-        <input type="text" name="role" value="scientist" id="role" hidden>
+        <input type="text" name="role" value="researcher" id="role" hidden>
         <button onmouseover="handleAnimation()" onmouseout="handleOutAnimation()" class="flex flex-row items-center justify-center gap-2 px-[1vw] py-[2vh] w-[60%] border-none text-[#fff] bg-accent-dark" type="submit">
             <p>Submit</p>
             <div id="line" class="w-0 h-[2px] bg-[#fff]"></div>
@@ -34,27 +34,27 @@
         line.style.transition = 'width 0.3s ease-in-out';
         line.style.width = '0';
     }
-    function setScientist() {
-        const scientist = document.getElementById('scientist');
+    function setResearcher() {
+        const researcher = document.getElementById('researcher');
         const diver = document.getElementById('diver');
         const role = document.getElementById('role');
-        scientist.classList.add('bg-accent-light');
-        scientist.classList.remove('bg-transparent')
+        researcher.classList.add('bg-accent-light');
+        researcher.classList.remove('bg-transparent')
         diver.classList.remove('bg-accent-light');
-        scientist.classList.remove('border-2');
+        researcher.classList.remove('border-2');
         diver.classList.add('border-2');
-        role.value = 'scientist';
+        role.value = 'researcher';
         console.log(role.value)
     }
     function setDiver() {
-        const scientist = document.getElementById('scientist');
+        const researcher = document.getElementById('researcher');
         const diver = document.getElementById('diver');
         const role = document.getElementById('role');
         diver.classList.add('bg-accent-light');
         diver.classList.remove('bg-transparent')
-        scientist.classList.remove('bg-accent-light');
+        researcher.classList.remove('bg-accent-light');
         diver.classList.remove('border-2');
-        scientist.classList.add('border-2');
+        researcher.classList.add('border-2');
         role.value = 'diver';
         console.log(role.value)
     }

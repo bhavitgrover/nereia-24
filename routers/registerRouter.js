@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         password: await bcrypt.hash(password, 10)
       })
       await newUser.save()
-      if (role === "scientist") {
+      if (role === "researcher") {
           const newResearcher = new Researcher({
             userId: newUser._id
           })
