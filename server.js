@@ -14,7 +14,8 @@ const express = require('express'),
 
 const indexRouter = require('./routers/indexRouter'),
       loginRouter = require('./routers/loginRouter'),
-      registerRouter = require('./routers/registerRouter')
+      registerRouter = require('./routers/registerRouter'),
+      chatRouter = require('./routers/chatRouter')
 
 app.use(express.static('public'))
 app.engine('ejs', engine)
@@ -38,6 +39,7 @@ mongoose.connect(process.env.MONGO_URI, console.log('MONGODB CONNECTED'))
 app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, registerRouter)
+app.use('/chat', ensureAuthenticated, chatRouter)
 
 
 app.get('/logout', (req, res) => {
