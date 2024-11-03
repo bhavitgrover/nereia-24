@@ -1,5 +1,5 @@
 <%- layout('layout') %>
-<div onclick="hideModal(event)" id="modal" class="w-[100vw] h-[100vh] flex flex-col items-center justify-center absolute bg-[rgba(0,0,0,0.5)]">
+<div onclick="hideModal(event)" id="modal" class="fixed w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[rgba(0,0,0,0.5)]">
     <div class="w-[40vw] h-[50vh] bg-background rounded-lg flex flex-col items-center justify-center">
         <p class="mb-[2vh]">Upload Image</p>
         <form action="/discoveries/uploadAvatar" method="post" class="flex flex-col items-center justify-center">
@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div onclick="hideModal2(event)" id="modal2" class="w-[100vw] h-[100vh] flex flex-col items-center justify-center absolute bg-[rgba(0,0,0,0.5)]">
+<div onclick="hideModal2(event)" id="modal2" class="fixed w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[rgba(0,0,0,0.5)]">
     <div class="w-[40vw] h-[65vh] bg-background rounded-lg flex flex-col pt-[4vh] pl-[4vh] pr-[4vh]">
         <div class="flex flex-row justify-between items-center">
             <h1 class="text-3xl font-extrabold text-accent-dark">Add New Discovery</h1>

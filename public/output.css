@@ -600,6 +600,10 @@ video {
   position: relative;
 }
 
+.sticky {
+  position: sticky;
+}
+
 .-top-6 {
   top: -1.5rem;
 }
@@ -622,6 +626,14 @@ video {
 
 .right-\[5vh\] {
   right: 5vh;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.z-\[-10\] {
+  z-index: -10;
 }
 
 .m-auto {
@@ -1067,6 +1079,10 @@ video {
 
 .justify-self-end {
   justify-self: end;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .overflow-y-scroll {
