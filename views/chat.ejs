@@ -1,23 +1,65 @@
 <%- layout('layout') %>
 
-    <% if (receiver){ %>
-        <h1 class="text-center w-full p-5 bg-periwinkle">
-            <%= receiver.fname +" "+ receiver.lname %></h1>
+
+<div id="interface" class="flex flex-row items-start justify-center w-[100vw] h-[100vh]">
 
 
-        <div class="chat w-[60vw] p-5 h-[80vh] m-auto overflow-y-scroll" id="chat">
+  <div id="chat-left" class="w-[30vw]">
+    <div id="header-left" class="font-bold p-5 uppercase bg-accent-dark text-background flex flex-row items-center">
+      <img src="/back.svg" alt="" class="w-3 mr-5 hover:cursor-pointer" onclick="location.href = location.href.split('chat')[0]">
+      <h1>Chats</h1>
+    </div>
+    <div id="chat-list">
+      <% allUsers.forEach(chatUser => { %>
+        <% if (chatUser.id != user.id) { %>
+         
+          <div class="p-5 hover:bg-periwinkle hover:cursor-pointer flex flex-row items-center gap-5 border-b-2 border-periwinkle" onclick="location.href=location.href.split('chat/')[0]+'/<%=chatUser.id %>'">
+            
+            <img src="/pfp.svg" alt="" class="w-10">
+            <h1><%= chatUser.fname + ' ' + chatUser.lname %></h1>
+          </div>
+          <% } %>
+      <% }) %>
+    </div>
+  </div>
+
+  <div id="chat-right" class=" w-[70vw]">
+
+    
+    
+    <% if (receiver!=null){ %>
+      <div id="header" class="font-semibold w-full bg-violet flex flex-row gap-5 pl-5">
+        <img src="/pfp.svg" alt="" class="w-10">
+        <h1 class="mt-5 mb-5">
+          <%= receiver.fname +" "+ receiver.lname %></h1>
+        </div>
+
+
+            <div class="chat p-5 h-[80vh] m-auto overflow-y-scroll" id="chat">
 
 
             <!-- YE LEFT ME -->
             <div class="message-container space-y-5"> <!-- This container adds vertical space between messages -->
                 <% messages.forEach(message => { %>
+                  <% const now = new Date();
+                  const messageDate = new Date(message.timestamp);
+                  
+                  const isToday = now.toDateString() === messageDate.toDateString();
+                  const isYesterday = new Date(now.setDate(now.getDate() - 1)).toDateString() === messageDate.toDateString();
+                  var timestampData = ''
+                  if(isToday){ timestampData = message.timestamp.toLocaleTimeString('en-GB', { hour: '2-digit' , minute: '2-digit' })}
+                  else if (isYesterday){timestampData = 'Yesterday'}
+                  else {
+                    timestampData = message.timestamp.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                  } 
+                  %>
                   <% if (message.to == user.id) { %>
                     
                     <!-- RECEIVED MESSAGE (aligned to the left) -->
                     <div class="flex justify-start"> <!-- Flex container aligns to start for received messages -->
-                      <div class="message-rec w-fit bg-accent-light p-2 rounded-r-lg rounded-b-lg relative max-w-[50vw]">
-                        <p class="timestamp opacity-50 absolute left-0 -top-6">
-                          <%= message.timestamp.toLocaleTimeString('en-GB', { hour: '2-digit' , minute: '2-digit' }) %>
+                      <div class="message-rec w-fit bg-periwinkle p-2 rounded-r-lg rounded-b-lg relative max-w-[50vw]">
+                        <p class="timestamp opacity-50 absolute left-0 -top-6 w-[50vh]">
+                          <%= timestampData %>
                         </p>
                         <p class="mtext">
                           <%= message.content %>
@@ -30,8 +72,8 @@
                     <!-- SENT MESSAGE (aligned to the right) -->
                     <div class="flex justify-end"> <!-- Flex container aligns to end for sent messages -->
                       <div class="message-sent w-fit bg-accent-light p-2 rounded-l-lg rounded-b-lg relative max-w-[50vw]">
-                        <p class="timestamp opacity-50 absolute right-0 -top-6">
-                          <%= message.timestamp.toLocaleTimeString('en-GB', { hour: '2-digit' , minute: '2-digit' }) %>
+                        <p class="timestamp opacity-50 absolute right-0 -top-6 w-[50vh] text-right">
+                          <%= timestampData %>
                         </p>
                         <p class="mtext">
                           <%= message.content %>
@@ -39,26 +81,31 @@
                       </div>
                     </div>
               
-                  <% } %>
+                    <% } %>
                 <% }) %>
               </div>
               
                 </div>
 
-                <div id="input-field" class="pt-5 flex flex-col w-[80vw] m-auto">
+                <div id="input-field" class="pt-5 flex flex-col m-auto">
                     <form action="/chat/<%= receiver.id %>" method="post" class="flex flex-row justify-center">
 
-                        <input type="hidden" name="from" value="<%= user.id %>">
-                        <input type="hidden" name="to" value="<%= receiver.id %>">
-                        <input class="p-3 w-[50vw] bg-transparent border-2 border-accent-dark outline-none text-primary" type="text" placeholder="Type your message here.." name="content">
-                        <button type="submit" class="p-2 bg-accent-dark"><img src="/send.svg" class="w-6" alt=""></button>
-                    </form>
-                </div>
-
-                <% } %>
-
-
-
+                      <input type="hidden" name="from" value="<%= user.id %>" id="userID">
+                      <input type="hidden" name="to" value="<%= receiver.id %>" id="recID">
+                        <input autofocus class="p-3 w-[50vw] bg-transparent border-2 border-accent-dark outline-none text-primary rounded-l-lg" type="text" placeholder="Type your message here.." name="content" required>
+                        <button type="submit" class="p-2 bg-accent-dark rounded-r-lg" id="send"><img src="/send.svg" class="w-6" alt=""></button>
+                      </form>
+                    </div>
+                    
+                    <% }  else { %>
+                      <div id="container-center" class="text-center w-full h-[100vh]  flex flex-col items-center justify-center text-2xl">
+                        <img src="/chat.svg" alt="" class="w-[10vw] mb-5">
+                        <h1 class="opacity-70">Click a contact to start a conversation.</h1>
+                      </div>
+                    <% } %>
+                  </div>
+                    
+                  </div>
 
 
 <% block('js', `
@@ -71,5 +118,28 @@
 
   window.onload = scrollToBottom;
     
+    document.addEventListener('DOMContentLoaded', () => {
+      const socket = io();
+
+      // Emit a new message when the user sends one
+      function sendMessage(event) {
+        const recID = document.getElementById('recID').value
+        socket.emit('sendMessage', recID); // Send message to server
+        }
+        
+        // Listen for new messages from the server
+        socket.on('receiveMessage', (message) => {
+        console.log('AAYAA EKKKKK')
+          // Only display the message if it's meant for the current user
+          const userID = document.getElementById('userID').value
+          if (message == userID) {
+          location.reload()
+        }
+      });
+
+      // Attach send message function to the form submission or button
+      document.getElementById('send').addEventListener('click', sendMessage, false);
+    });
+
     </script>
     `) %>

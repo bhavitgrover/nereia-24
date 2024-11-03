@@ -5,23 +5,29 @@ const express = require('express'),
     passport = require('passport'),
     session = require('express-session'),
     flash = require('express-flash'),
-    app = express(),
     passportInit = require('./utils/passport-config'),
     { ensureAuthenticated, forwardAuthenticated } = require('./utils/authenticate'),
     PORT = process.env.PORT || 5000,
-    bodyParser = require('body-parser')
-    engine = require('ejs-blocks');
+    bodyParser = require('body-parser'),
+    engine = require('ejs-blocks'),
+    http = require('http'),
+    socketIo = require('socket.io'),
+    path = require('path'),
+    app = express()
+
+const server = http.createServer(app); // Create HTTP server
+const io = socketIo(server); // Attach Socket.IO to the server
 
 const indexRouter = require('./routers/indexRouter'),
-      loginRouter = require('./routers/loginRouter'),
-      registerRouter = require('./routers/registerRouter'),
-      chatRouter = require('./routers/chatRouter')
+    loginRouter = require('./routers/loginRouter'),
+    registerRouter = require('./routers/registerRouter'),
+    chatRouter = require('./routers/chatRouter')
 
 app.use(express.static('public'))
 app.engine('ejs', engine)
 app.set('view engine', 'ejs')
 app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }));
 passportInit(passport)
 app.use(flash())
@@ -49,4 +55,19 @@ app.get('/logout', (req, res) => {
     });
 })
 
-app.listen(PORT, console.log(`Server listening on port ${PORT}`))
+
+io.on('connection', (socket) => {
+    console.log('New client connected');
+
+    socket.on('sendMessage', (message) => {
+        console.log('message sent')
+        io.emit('receiveMessage', message); // Broadcast message to all connected clients
+        console.log('receive signal sent')
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
+
+server.listen(PORT, console.log(`Server listening on port ${PORT}`))

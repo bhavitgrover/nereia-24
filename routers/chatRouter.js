@@ -6,17 +6,21 @@ const { ensureAuthenticated } = require('../utils/authenticate');
 
 router.get('/', async (req,res) => {
     // console.log(req.user)
-    res.render('chat', {title:'welcome', user:req.user})
+
+    const allUsers = await User.find({})
+    res.render('chat', {title:'welcome', user:req.user, receiver:null, allUsers})
 })
 router.get('/:id', async (req,res) => {
     // console.log(req.user)
     const receiver = await User.findById(req.params['id'])
+    const allUsers = await User.find({})
+
 
     var messagesRec = await Messages.find({from: req.params['id'], to: req.user.id})
     var messagesSen = await Messages.find({to: req.params['id'], from: req.user.id})
     var messages = messagesRec.concat(messagesSen)
     messages.sort((a, b) => a.timestamp - b.timestamp);
-    res.render('chat', {title:'welcome', user:req.user, receiver, messages})
+    res.render('chat', {title:'welcome', user:req.user, receiver, messages, allUsers})
 })
 
 router.post('/:id', ensureAuthenticated, async (req, res)=>{
