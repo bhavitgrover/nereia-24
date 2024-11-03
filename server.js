@@ -19,9 +19,10 @@ const server = http.createServer(app); // Create HTTP server
 const io = socketIo(server); // Attach Socket.IO to the server
 
 const indexRouter = require('./routers/indexRouter'),
-    loginRouter = require('./routers/loginRouter'),
-    registerRouter = require('./routers/registerRouter'),
-    chatRouter = require('./routers/chatRouter')
+      loginRouter = require('./routers/loginRouter'),
+      registerRouter = require('./routers/registerRouter'),
+      chatRouter = require('./routers/chatRouter'),
+      discoveriesRouter = require('./routers/discoveriesRouter')
 
 app.use(express.static('public'))
 app.engine('ejs', engine)
@@ -46,6 +47,7 @@ app.use('/', indexRouter)
 app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, registerRouter)
 app.use('/chat', ensureAuthenticated, chatRouter)
+app.use('/discoveries', ensureAuthenticated, discoveriesRouter)
 
 
 app.get('/logout', (req, res) => {
