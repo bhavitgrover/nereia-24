@@ -22,7 +22,8 @@ const indexRouter = require('./routers/indexRouter'),
       loginRouter = require('./routers/loginRouter'),
       registerRouter = require('./routers/registerRouter'),
       chatRouter = require('./routers/chatRouter'),
-      discoveriesRouter = require('./routers/discoveriesRouter')
+      discoveriesRouter = require('./routers/discoveriesRouter'),
+      cliRouter = require('./routers/cliRouter');
 
 app.use(express.static('public'))
 app.use(express.json({limit: '50mb'}));
@@ -50,6 +51,7 @@ app.use('/login', forwardAuthenticated, loginRouter)
 app.use('/register', forwardAuthenticated, registerRouter)
 app.use('/chat', ensureAuthenticated, chatRouter)
 app.use('/discoveries', ensureAuthenticated, discoveriesRouter)
+app.use('/cli', ensureAuthenticated, cliRouter)
 
 
 app.get('/logout', (req, res) => {

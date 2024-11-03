@@ -1,0 +1,51 @@
+<%- layout('layout') %>
+
+<div class="container flex flex-row w-[100vw] min-h-[100vh]">
+    <div class="profile border-r-2 border-accent-dark">
+        <div class="w-[20vw] flex flex-col items-center">
+            <% if (user.avatar) { %>
+                <img src="<%= user.avatar %>" alt="Profile" class="w-[7vw] aspect-square rounded-full mt-[8vh] border border-accent-dark">
+            <% } else { %>
+                <img src="/avatar.png" alt="Profile" class="w-[7vw] aspect-square rounded-full mt-[8vh] border border-accent-dark">
+            <% } %>
+            <div class="flex flex-col items-center mt-3">
+                <h1 class="text-xl font-semibold text-accent-dark"><%= user.fname %> <%= user.lname %></h1>
+                <p class="text-sm text-accent-light"><%= user.role %></p>
+            </div>
+            <p class="mt-5">Posted at: <%= discovery.createdAt.toLocaleString().split(',')[0] %></p>
+            <% if (discovery.userId == user.id) { %>
+                <i onclick="deletePost('<%= discovery._id %>')" title="Delete Discovery" class="fa-solid fa-trash mt-[4vh] text-3xl text-red-600 cursor-pointer"></i>
+            <% } %>
+            <% if (discovery.important) { %>
+                <p class="text-center mt-[3vh] font-semibold text-accent-dark">User has marked this discovery as important.</p>
+            <% }%>
+        </div>
+    </div>
+    <div class="p-[4vw]">
+        <div class="mt-[2vw]">
+            <h1 class="text-3xl font-semibold text-accent-dark"><%= discovery.title %></h1>
+            <p class="mt-5 w-[90%]"><%= discovery.description %></p>
+        </div>        
+    </div>
+</div>
+
+<script>
+    function deletePost(id) {
+        console.log('yeh kya hai?')
+        fetch(`/discoveries/delete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id
+            }),
+        }).then(res => {
+            res.json().then(data => {
+                if (data.success) {
+                    window.location.href = '/discoveries';
+                }
+            });
+        });
+    }
+</script>

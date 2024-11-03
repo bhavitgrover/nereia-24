@@ -56,4 +56,15 @@ router.post('/addDiscovery', async (req,res) => {
     res.redirect('/discoveries')
 })
 
+router.get('/:id', async (req,res) => {
+    const discovery = await Discovery.findOne({_id:req.params.id})
+    res.render('discovery', {user:req.user, discovery})
+})
+
+router.post('/delete', async (req,res) => {
+    await Discovery.deleteOne({_id:req.body.id})
+    console.log('hava me udd gya')
+    return res.json({message:'Deleted', success: true})
+})
+
 module.exports = router
