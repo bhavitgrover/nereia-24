@@ -25,6 +25,8 @@ const indexRouter = require('./routers/indexRouter'),
       discoveriesRouter = require('./routers/discoveriesRouter')
 
 app.use(express.static('public'))
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 app.engine('ejs', engine)
 app.set('view engine', 'ejs')
 app.use(express.json())

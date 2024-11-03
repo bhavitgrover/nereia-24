@@ -5,7 +5,7 @@
         <input name="email" class="w-[20vw] h-[7vh] px-[1vw] py-[2vh] border-2 border-accent-dark bg-transparent outline-none" placeholder="johndoe@email.com" type="email">
         <input name="password" class="w-[20vw] h-[7vh] px-[1vw] py-[2vh] border-2 border-accent-dark bg-transparent outline-none" placeholder="abc@012" type="password">
         <% if (messages.error) { %>
-            <p class="text-red-500 font-semibold"><%= messages.error %></p>
+            <p class="text-red-500 font-semibold break-words w-[20vw]"><%= messages.error %></p>
         <% } %>
         <button onmouseover="handleAnimation()" onmouseout="handleOutAnimation()" class="flex flex-row items-center justify-center gap-2 px-[1vw] py-[2vh] w-[60%] border-none text-[#fff] bg-accent-dark" type="submit">
             <p>Submit</p>

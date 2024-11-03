@@ -2,8 +2,9 @@
 <div onclick="hideModal(event)" id="modal" class="w-[100vw] h-[100vh] flex flex-col items-center justify-center absolute bg-[rgba(0,0,0,0.5)]">
     <div class="w-[40vw] h-[50vh] bg-background rounded-lg flex flex-col items-center justify-center">
         <p class="mb-[2vh]">Upload Image</p>
-        <form action="/discoveries/uploadAvatar" enctype="multipart/form-data" method="post" class="flex flex-col items-center justify-center">
+        <form action="/discoveries/uploadAvatar" method="post" class="flex flex-col items-center justify-center">
             <input name="file" type="file" hidden onchange="previewImage()" accept="image/*" id="img">
+            <input type="hidden" name="base64Image" id="base64Image">
             <label for="img">
                 <i class="fa-solid fa-upload text-[5vw]"></i>
             </label>
@@ -15,25 +16,84 @@
         </form>
     </div>
 </div>
+
+<div onclick="hideModal2(event)" id="modal2" class="w-[100vw] h-[100vh] flex flex-col items-center justify-center absolute bg-[rgba(0,0,0,0.5)]">
+    <div class="w-[40vw] h-[65vh] bg-background rounded-lg flex flex-col pt-[4vh] pl-[4vh] pr-[4vh]">
+        <div class="flex flex-row justify-between items-center">
+            <h1 class="text-3xl font-extrabold text-accent-dark">Add New Discovery</h1>
+            <i title="Mark Important" onclick="markImportant()" class="fa-regular fa-star text-xl text-accent-dark"></i>
+        </div>
+        <form action="/discoveries/addDiscovery" class="mt-[4vh] flex flex-col gap-[1vh]" method="post" >
+            <input type="text" value="false" name="important" hidden id="important">
+            <p class="font-semibold text-accent-dark">Title</p>
+            <input name="title" class="w-[100%] h-[7vh] px-[1vw] py-[2vh] border-2 border-accent-dark bg-transparent outline-none" placeholder="Advanced Technology" type="text">
+            <p class="font-semibold text-accent-dark">Description</p>
+            <textarea name="description" class="w-[100%] h-[20vh] px-[1vw] py-[2vh] border-2 border-accent-dark bg-transparent outline-none" placeholder="A brief description of the technology"></textarea>
+            <button class="flex mt-[2vh] flex-row items-center justify-center gap-2 px-[1vw] py-[2vh] border-none w-[7vw] text-[#fff] bg-accent-dark" type="submit">
+                <p>Submit</p>
+            </button>
+
+        </form>
+    </div>
+</div>
+
 <div class="container flex flex-row w-[100vw] min-h-[100vh]">
-    <div class="profile">
+    <div class="profile border-r-2 border-accent-dark">
         <div class="w-[20vw] flex flex-col items-center">
-            <img onclick="showModal()" src="/avatar.png" alt="Profile" class="profile__header__img w-[7vw] mt-[8vh]">
+            <% if (user.avatar) { %>
+                <img onclick="showModal()" src="<%= user.avatar %>" alt="Profile" class="w-[7vw] aspect-square rounded-full mt-[8vh] border border-accent-dark">
+            <% } else { %>
+                <img onclick="showModal()" src="/avatar.png" alt="Profile" class="w-[7vw] aspect-square rounded-full mt-[8vh] border border-accent-dark">
+            <% } %>
+            <p class="text-[1.5vh] mt-[0.5vh]">(CLICK TO EDIT)</p>
             <div class="flex flex-col items-center mt-3">
                 <h1 class="text-xl font-semibold text-accent-dark"><%= user.fname %> <%= user.lname %></h1>
                 <p class="text-sm text-accent-light"><%= user.role %></p>
             </div>
         </div>
     </div>
-    <div class="discoveries w-[80vw] bg-accent-dark"></div>
+    <div class="discoveries w-[80vw] p-[4vw]">
+        <h1 class="text-5xl font-extrabold text-accent-dark">Discoveries</h1>
+        <div class="discoveries mt-[7vh] flex flex-col gap-[4vh]">
+            <% for (let i = 0; i < discoveries.length; i++) { %>
+                <div class="w-[80%] h-[23vh] rounded-md border-b-2 border-accent-light">
+                    <div class="profile w-[100%] flex flex-row justify-between">
+                        <div class="flex flex-row items-center w-fit gap-[1vw]">
+                            <img src="<%= discoveries[i].avatar %>" class="w-[3.5vw] aspect-square rounded-full border border-accent-dark" alt="">
+                            <div class="">
+                                <h1 class="font-semibold text-accent-dark text-[1.3vw] m-0"><%= discoveries[i].author %></h1>
+                                <p class="text-[1vw] m-0"><%= discoveries[i].role %></p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end gap-1">
+                            <h1><%= discoveries[i].createdAt.toLocaleString().split(',')[0] %></h1>
+                            <% if (discoveries[i].important) { %>
+                                <i title="Important" class="fa-solid fa-star text-accent-dark"></i>
+                            <% }%>
+                        </div>
+                    </div>
+                    <h1 class="ml-[4.5vw] mt-[2vh] text-xl font-semibold"><%= discoveries[i].title %></h1>
+                    <% if (discoveries[i].description.length > 175) { %>
+                        <p class="ml-[4.5vw] break-words"><%= discoveries[i].description.slice(0, 175) %>...</p>
+                    <% } else { %>
+                        <p class="ml-[4.5vw] break-words"><%= discoveries[i].description %></p>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<div onclick="showModal2()" class="fixed bg-violet text-accent-dark font-bold w-fit h-fit p-[2vh] bottom-[5vh] right-[5vh]">
+    <i class="fa-solid fa-plus"></i> Add Discovery
 </div>
 
 <style>
-    #modal {
+    #modal, #modal2 {
         display: none;
     }
 </style>
 
+<script src="https://kit.fontawesome.com/0f20a2b955.js" crossorigin="anonymous"></script>
 <script>
     function showModal() {
         const modal = document.getElementById('modal');
@@ -46,15 +106,30 @@
             modal.style.display = 'none';
         }
     }
+    function showModal2() {
+        const modal = document.getElementById('modal2');
+        modal.style.display = 'flex';
+
+    }
+    function hideModal2(event) {
+        const modal = document.getElementById('modal2');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
     function previewImage() {
-        console.log('damn')
-        const [file] = document.getElementById('img').files
-        console.log(file)
-        if (file) {
-            document.getElementById('preview').src = URL.createObjectURL(file)
+        const file = document.getElementById('img').files[0];
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+            document.getElementById('base64Image').value = base64String;
+            document.getElementById('preview').src = reader.result;
             document.getElementById('preview').style.display = 'block';
-            document.querySelector('label i').style.display = 'none';
             document.getElementById('btn').style.display = 'flex';
+            document.querySelector('label i').style.display = 'none';
+        }
+        if (file) {
+            reader.readAsDataURL(file);
         }
     }
     function handleAnimation() {
@@ -66,5 +141,16 @@
         const line = document.getElementById('line');
         line.style.transition = 'width 0.3s ease-in-out';
         line.style.width = '0';
+    }
+    function markImportant() {
+        const star = document.querySelector('.fa-star');
+        star.classList.toggle('fa-regular');
+        star.classList.toggle('fa-solid');
+        const important = document.getElementById('important');
+        if (important.value === 'false') {
+            important.value = 'true';
+        } else {
+            important.value = 'false';
+        }
     }
 </script>

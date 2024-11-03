@@ -7,7 +7,11 @@ const userSchema = mongoose.Schema({
     email: reqString,
     password: reqString,
     role: reqString,
-    avatar: reqString
+    avatar: {
+        type: String,
+        default: "",
+        required: false
+    }
 })
 
 module.exports = mongoose.model("User", userSchema)
