@@ -13,7 +13,7 @@
       <% allUsers.forEach(chatUser => { %>
         <% if (chatUser.id != user.id) { %>
          
-          <div class="p-5 hover:bg-periwinkle hover:cursor-pointer flex flex-row items-center gap-5 border-b-2 border-periwinkle" onclick="location.href=location.href.split('chat/')[0]+'/<%=chatUser.id %>'">
+          <div class="p-5 hover:bg-periwinkle hover:cursor-pointer flex flex-row items-center gap-5 border-b-2 border-periwinkle" onclick="location.href=location.href.split('chat')[0]+'chat/<%=chatUser.id %>'">
             
             <img src="/pfp.svg" alt="" class="w-10">
             <h1><%= chatUser.fname + ' ' + chatUser.lname %></h1>
