@@ -829,6 +829,14 @@ video {
   height: 5vh;
 }
 
+.h-\[45vh\] {
+  height: 45vh;
+}
+
+.h-\[48vh\] {
+  height: 48vh;
+}
+
 .min-h-\[100vh\] {
   min-height: 100vh;
 }
@@ -1208,6 +1216,14 @@ video {
 
 .p-\[4vw\] {
   padding: 4vw;
+}
+
+.p-\[4vh\] {
+  padding: 4vh;
+}
+
+.p-\[3vh\] {
+  padding: 3vh;
 }
 
 .px-\[1vw\] {

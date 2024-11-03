@@ -23,6 +23,7 @@ const indexRouter = require('./routers/indexRouter'),
       registerRouter = require('./routers/registerRouter'),
       chatRouter = require('./routers/chatRouter'),
       discoveriesRouter = require('./routers/discoveriesRouter'),
+      aiRouter = require('./routers/aiRouter'),
       cliRouter = require('./routers/cliRouter');
 
 app.use(express.static('public'))
@@ -52,6 +53,7 @@ app.use('/register', forwardAuthenticated, registerRouter)
 app.use('/chat', ensureAuthenticated, chatRouter)
 app.use('/discoveries', ensureAuthenticated, discoveriesRouter)
 app.use('/cli', ensureAuthenticated, cliRouter)
+app.use('/ai', ensureAuthenticated, aiRouter)
 
 
 app.get('/logout', (req, res) => {
