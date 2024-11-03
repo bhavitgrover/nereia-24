@@ -1,6 +1,8 @@
 require('dotenv').config();
 const User = require('../schemas/userSchema')
 const Discovery = require('../schemas/discoverySchema')
+const FormData = require('form-data');
+const fetch = require('node-fetch')
 
 const router = require('express').Router()
 
