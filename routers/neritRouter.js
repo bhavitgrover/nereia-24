@@ -1,14 +1,19 @@
+require('dotenv').config()
 const router = require('express').Router(),
     Wallet = require('../schemas/walletSchema'),
     newWallet = require('../utils/blockchain/wallet'),
     Block = require('../schemas/blockSchema'),
     {generateKeyPairSync} = require('crypto'),
-    {createBlock} = require('../utils/blockchain/blockchain')
+    {createBlock} = require('../utils/blockchain/blockchain'),
+    stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.get('/', async (req, res) => {
     // console.log(createBlock('bhavit', 'arti chopra', 100, '627890c9042459af1db065dfb465e69113c53a0e2be2c5dd12b52172e2abbf7f'))
     const reqWallet = await Wallet.findOne({mongooseId: req.user.id})
-    res.render('nerit', {user: req.user, wallet: reqWallet})
+    const nerit = Number(process.env.NERIT);
+    const totalMoney = nerit * reqWallet.money
+    console.log(typeof Number(nerit), typeof totalMoney)
+    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: nerit, totalMoney: totalMoney})
 })
 
 router.get('/pay', async (req,res) => {
@@ -37,6 +42,41 @@ router.get('/createWallet', (req, res) => {
         if (resp) return res.redirect('/nerit')
         res.send('Something went wrong.')
     })
+})
+
+router.post('/buyNerit', async (req, res) => {
+    const {amount} = req.body
+    const nerit = Number(process.env.NERIT)
+    const totalMoney = nerit * amount
+    try {
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+                price_data: {
+                    currency: 'inr',
+                    product_data: {
+                        name: 'Nerit Tokens',
+                    },
+                    unit_amount: totalMoney * 100,
+                },
+                quantity: 1,
+            }],
+            mode: 'payment',
+            success_url: `${req.protocol}://${req.get('host')}/nerit/success?money=${amount}`,
+            cancel_url: `${req.protocol}://${req.get('host')}/nerit`,
+        });
+
+        res.redirect(303, session.url);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Payment session creation failed' });
+    }
+})
+
+router.get('/success', async (req, res) => {
+    const {money} = req.query
+    await Wallet.findOneAndUpdate({mongooseId: req.user.id}, {$inc: {money: money}})
+    res.redirect('/nerit')
 })
 
 module.exports = router
