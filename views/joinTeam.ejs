@@ -1,0 +1,68 @@
+<%- layout('layout') %>
+<div class="w-[100vw] min-h-[100vh] flex flex-col p-[4vh]">
+  <div class="w-[100vw] flex flex-col items-center justify-center gap-[2vh]">
+    <h1 class="text-3xl font-extrabold text-accent-dark text-center">
+      Join Our Team
+    </h1>
+    <p class="text-sm text-center text-[rgba(0,0,0,0.5)] w-[50vw]">
+      To join our team you need to choose your profession below and then your
+      application will be sent for verification. <b>*Note:</b> For development
+      purposes, after choosing the role, you will be accepted into the team.
+    </p>
+  </div>
+  <div class="w-[100vw] h-[50vh] flex flex-row items-center justify-center">
+    <form
+      action=""
+      class="flex flex-col justify-center w-[50vw] h-[100%]"
+      method="post"
+    >
+      <div class="flex flex-row w-[15vw] h-[10vh]">
+        <div
+          id="researcher"
+          onclick="setResearcher()"
+          class="w-[50%] flex items-center justify-center bg-accent-light border-accent-light border-r-0"
+        >
+          Researcher
+        </div>
+        <div
+          id="diver"
+          onclick="setDiver()"
+          class="w-[50%] flex items-center justify-center bg-transparent border-2 border-accent-light border-l-0"
+        >
+          Diver
+        </div>
+      </div>
+      <input type="text" name="role" value="researcher" id="role" hidden />
+    </form>
+    <div class="w-[50vw] h-[100%]">
+      <img src="/illus_login.png" class="w-[40vw]" alt="" />
+    </div>
+  </div>
+</div>
+
+<script>
+  function setResearcher() {
+    const researcher = document.getElementById("researcher");
+    const diver = document.getElementById("diver");
+    const role = document.getElementById("role");
+    researcher.classList.add("bg-accent-light");
+    researcher.classList.remove("bg-transparent");
+    diver.classList.remove("bg-accent-light");
+    researcher.classList.remove("border-2");
+    diver.classList.add("border-2");
+    role.value = "researcher";
+    console.log(role.value);
+  }
+  function setDiver() {
+    const researcher = document.getElementById("researcher");
+    const diver = document.getElementById("diver");
+    const role = document.getElementById("role");
+    diver.classList.add("bg-accent-light");
+    diver.classList.remove("bg-transparent");
+    researcher.classList.remove("bg-accent-light");
+    diver.classList.remove("border-2");
+    researcher.classList.add("border-2");
+    role.value = "diver";
+    console.log(role.value);
+  }
+</script>
