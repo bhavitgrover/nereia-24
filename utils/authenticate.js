@@ -7,6 +7,13 @@ function ensureAuthenticated(req, res, next) {
     else res.redirect('/login');
   }
 
+function ensureRole(req,res,next) {
+    if(req.user.role === 'diver' || req.user.role === 'researcher'){
+        return next();
+    }
+    else res.redirect('/join');
+  }
+
 function forwardAuthenticated(req, res, next) {
     if (!req.isAuthenticated()) {
       return next();
@@ -16,4 +23,4 @@ function forwardAuthenticated(req, res, next) {
     } 
   }
 
-module.exports = { ensureAuthenticated, forwardAuthenticated};
+module.exports = { ensureAuthenticated, forwardAuthenticated, ensureRole};

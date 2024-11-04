@@ -6,7 +6,7 @@ const auctionSchema = mongoose.Schema({
     product: reqString,
     description: reqString,
     image: reqString,
-    biddingPrice: reqString,
+    biddingPrice: {type: Number, required: true},
     highestBidder: reqString,
     createdAt: { type: Date, default: Date.now },
     live:{ type: Boolean, default: false},
