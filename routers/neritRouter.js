@@ -1,11 +1,11 @@
 const router = require('express').Router(),
     Wallet = require('../schemas/walletSchema'),
     newWallet = require('../utils/blockchain/wallet'),
-    {generateKeyPairSync} = require('crypto')
+    {generateKeyPairSync} = require('crypto'),
+    {createBlock} = require('../utils/blockchain/blockchain')
 
 router.get('/', async (req, res) => {
-    // const allWallets = await Wallet.find()
-    // console.log(allWallets)
+    console.log(createBlock('bhavit', 'arti chopra', 100, '627890c9042459af1db065dfb465e69113c53a0e2be2c5dd12b52172e2abbf7f'))
 })
 
 router.get('/createWallet', (req, res) => {

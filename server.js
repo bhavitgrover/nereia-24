@@ -16,6 +16,7 @@ const express = require("express"),
   http = require("http"),
   socketIo = require("socket.io"),
   path = require("path"),
+  MongoStore = require('connect-mongo'),
   app = express();
 
 const server = http.createServer(app);
@@ -31,6 +32,8 @@ const indexRouter = require("./routers/indexRouter"),
   joinRouter = require("./routers/joinRouter"),
   neritRouter = require("./routers/neritRouter"),
   cliRouter = require("./routers/cliRouter");
+  
+mongoose.connect(process.env.MONGO_URI, console.log("MONGODB CONNECTED"));
 
 app.use(express.static("public"));
 app.use(express.json({ limit: "50mb" }));
@@ -47,12 +50,20 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+        mongooseConnection: mongoose.connection,
+        ttl: 30 * 24 * 60 * 60 
+    }),
+    cookie: {
+        secure: 'auto',
+        maxAge: 30 * 24 * 60 * 60 * 1000
+    }
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect(process.env.MONGO_URI, console.log("MONGODB CONNECTED"));
 
 app.use("/", indexRouter);
 app.use("/login", forwardAuthenticated, loginRouter);

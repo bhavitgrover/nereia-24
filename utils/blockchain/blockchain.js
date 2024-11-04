@@ -1,3 +1,5 @@
+const {createHash} = require('crypto')
+
 function createBlock(payer, payee, amount, prevHash) {
   const date = Number(new Date());
   const hashPayload = JSON.stringify({
@@ -5,4 +7,8 @@ function createBlock(payer, payee, amount, prevHash) {
     timeStamp: date,
     prevHash: prevHash
   });
+  const hash = createHash('SHA256').update(hashPayload).end().digest('hex')
+  return hash
 }
+
+module.exports = {createBlock}
