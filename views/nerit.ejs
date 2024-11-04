@@ -1,0 +1,87 @@
+<%- layout('layout') %>
+
+<div class="w-[100vw] h-[100vh] p-[4vh]">
+    <div class="topNav w-[100%] h-[10vh] flex flex-row items-center justify-between">
+        <h1 class="text-5xl font-extrabold text-accent-dark">Nerit</h1>
+        <div class="flex flex-row items-center justify-center gap-[3vh]">
+            <% if (!wallet) { %>
+                <p class="link text-xl cursor-pointer text-accent-dark">Create Wallet</p>
+            <% } %>
+            <p class="link text-xl cursor-pointer text-accent-dark">Shayamk 1</p>
+            <p class="link text-xl cursor-pointer text-accent-dark">Shayamk 2</p>
+        </div>
+    </div>
+
+    <div class="w-[100vw] flex flex-row items-center justify-center">
+        <div id="myPlot" class="w-[40vw] h-[60vh] aspect-auto font-raleway"></div>
+    </div>
+</div>
+
+<style>
+    .link {
+        position: relative;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .link::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: currentColor;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .link:hover::before {
+        visibility: visible;
+        width: 100%;
+    }
+</style>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    var layout = {
+        xaxis: {
+            title: 'X Axis Label',
+            showgrid: false,
+            zeroline: true, 
+        },
+        yaxis: {
+            title: 'Y Axis Label',
+            showline: true
+        },
+        plot_bgcolor: '#eeeefc',
+        paper_bgcolor: '#eeeefc',
+        font: {
+            family: 'Raleway',
+            size: '1vw',
+            color: '#11005e'
+        },
+    };
+
+    var data = [
+        {
+            x: [1, 2, 3, 4],
+            y: [10, 15, 13, 17],
+            type: 'scatter',
+            mode: 'lines+markers',
+            marker: {
+                color: '#11005e',
+                size: 10
+            },
+            line: {
+                color: 'blue',
+                width: 2,
+                dash: 'dash'
+            },
+        }
+    ];
+    var config = {
+        modeBarButtonsToRemove: ['toImage'],
+        displaylogo: false
+    };
+    Plotly.newPlot('myPlot', data, layout, config);
+</script>
