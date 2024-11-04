@@ -11,9 +11,7 @@ router.get('/', async (req, res) => {
     // console.log(createBlock('bhavit', 'arti chopra', 100, '627890c9042459af1db065dfb465e69113c53a0e2be2c5dd12b52172e2abbf7f'))
     const reqWallet = await Wallet.findOne({mongooseId: req.user.id})
     const nerit = Number(process.env.NERIT);
-    const totalMoney = nerit * reqWallet.money
-    console.log(typeof Number(nerit), typeof totalMoney)
-    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: nerit, totalMoney: totalMoney})
+    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: nerit})
 })
 
 router.get('/pay', async (req,res) => {
