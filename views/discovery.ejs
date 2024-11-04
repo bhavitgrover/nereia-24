@@ -1,16 +1,22 @@
 <%- layout('layout') %>
 
+<div onclick="hideModal(event)" id="modal" class="w-[100vw] h-[100vh] flex flex-col items-center justify-center absolute bg-[rgba(0,0,0,0.5)]">
+    <div class="w-[40vw] h-[48vh] bg-background rounded-lg flex flex-col p-[2vh]">
+        <p id="thinking" class="text-md">Thinking...</p>
+    </div>
+</div>
+
 <div class="container flex flex-row w-[100vw] min-h-[100vh]">
     <div class="profile border-r-2 border-accent-dark">
         <div class="w-[20vw] flex flex-col items-center">
-            <% if (user.avatar) { %>
-                <img src="<%= user.avatar %>" alt="Profile" class="w-[7vw] aspect-square rounded-full mt-[8vh] border border-accent-dark">
+            <% if (discovery.avatar) { %>
+                <img src="<%= discovery.avatar %>" alt="Profile" class="w-[7vw] aspect-square rounded-full mt-[8vh] border border-accent-dark">
             <% } else { %>
                 <img src="/avatar.png" alt="Profile" class="w-[7vw] aspect-square rounded-full mt-[8vh] border border-accent-dark">
             <% } %>
             <div class="flex flex-col items-center mt-3">
-                <h1 class="text-xl font-semibold text-accent-dark"><%= user.fname %> <%= user.lname %></h1>
-                <p class="text-sm text-accent-light"><%= user.role %></p>
+                <h1 class="text-xl font-semibold text-accent-dark"><%= discovery.author %></h1>
+                <p class="text-sm text-accent-light"><%= discovery.role %></p>
             </div>
             <p class="mt-5">Posted at: <%= discovery.createdAt.toLocaleString().split(',')[0] %></p>
             <% if (discovery.userId == user.id) { %>
@@ -25,9 +31,19 @@
         <div class="mt-[2vw]">
             <h1 class="text-3xl font-semibold text-accent-dark"><%= discovery.title %></h1>
             <p class="mt-5 w-[90%]"><%= discovery.description %></p>
-        </div>        
+        </div>
     </div>
 </div>
+
+<div onclick="showModal()" class="fixed bg-violet text-accent-dark font-bold w-fit h-fit p-[2vh] bottom-[5vh] right-[5vh]">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>&nbsp;&nbsp; Summarize using AI
+</div>
+
+<style>
+    #modal {
+        display: none;
+    }
+</style>
 
 <script>
     function deletePost(id) {
@@ -47,5 +63,28 @@
                 }
             });
         });
+    }
+    function showModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = 'flex';
+        fetch(`/ai`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                prompt: `Summarize the discovery post Wrap ONLY THE IMPORTANT KEYWORDS around <strong> tag in html :<%= discovery.description %>. the word limit should be MAXIMUM 100 words NO MORE THAN THAT AT UTMOST PRIORITY. THIS IS A TL;DR`,
+            })
+        }).then(res => {
+            res.json().then(data => {
+                document.getElementById('thinking').innerHTML = data.response;
+            });
+        });
+    }
+    function hideModal(event) {
+        const modal = document.getElementById('modal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     }
 </script>

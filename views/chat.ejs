@@ -47,10 +47,10 @@
                   const isToday = now.toDateString() === messageDate.toDateString();
                   const isYesterday = new Date(now.setDate(now.getDate() - 1)).toDateString() === messageDate.toDateString();
                   var timestampData = ''
-                  if(isToday){ timestampData = message.timestamp.toLocaleTimeString('en-GB', { hour: '2-digit' , minute: '2-digit' })}
+                  if(isToday){ timestampData = message.timestamp.toLocaleTimeString('en-IN', { hour: '2-digit' , minute: '2-digit', timeZone: "Asia/Kolkata" })}
                   else if (isYesterday){timestampData = 'Yesterday'}
                   else {
-                    timestampData = message.timestamp.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                    timestampData = message.timestamp.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
                   } 
                   %>
                   <% if (message.to == user.id) { %>
