@@ -7,12 +7,10 @@ const blockSchema = mongoose.Schema({
   amount: reqNumber,
   payer: reqString,
   payee: reqString,
-  nonce: reqNumber,
   previousHash: reqString,
   timeStamp: {
-    type: Date,
-    required: true,
-    default: Date.now,
+    type: Number,
+    required: true
   },
 });
 

@@ -7,7 +7,7 @@ async function newWallet(id) {
         const keyPair = generateKeyPairSync('rsa', {
             modulusLength: 2048,
             publicKeyEncoding: { type: 'spki', format: 'der' },
-            privateKeyEncoding: { type: 'pkcs1', format: 'der' }
+            privateKeyEncoding: { type: 'pkcs8', format: 'der' }
         })
         const publicKey = keyPair.publicKey.toString('base64'),
             privateKey = keyPair.privateKey.toString('base64')
