@@ -18,8 +18,8 @@ const express = require("express"),
   path = require("path"),
   app = express();
 
-const server = http.createServer(app); // Create HTTP server
-const io = socketIo(server); // Attach Socket.IO to the server
+const server = http.createServer(app);
+const io = socketIo(server);
 
 const indexRouter = require("./routers/indexRouter"),
   loginRouter = require("./routers/loginRouter"),
