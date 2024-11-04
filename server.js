@@ -29,7 +29,8 @@ const indexRouter = require("./routers/indexRouter"),
   aiRouter = require("./routers/aiRouter"),
   auctionRouter = require("./routers/auctionRouter"),
   joinRouter = require("./routers/joinRouter"),
-  cliRouter = require("./routers/cliRouter");
+  cliRouter = require("./routers/cliRouter"),
+  shopRouter = require("./routers/shopRouter");
 
 app.use(express.static("public"));
 app.use(express.json({ limit: "50mb" }));
@@ -62,6 +63,7 @@ app.use("/cli", ensureAuthenticated, cliRouter);
 app.use("/ai", ensureAuthenticated, aiRouter);
 app.use("/auction", ensureAuthenticated, auctionRouter);
 app.use("/join", ensureAuthenticated, joinRouter);
+app.use("/shop", ensureAuthenticated, shopRouter);
 
 app.get("/logout", (req, res) => {
   req.logout((err) => {
