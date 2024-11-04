@@ -1,21 +1,92 @@
 <%- layout('layout') %>
 
-<div class="w-[100vw] h-[100vh] p-[4vh]">
+<div
+  onclick="hideModal(event)"
+  id="modal"
+  class="fixed w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[rgba(0,0,0,0.5)]"
+>
+  <div
+    class="w-[40vw] h-[50vh] bg-background rounded-lg flex flex-col items-center justify-center"
+  >
+    <form action="/nerit/buyNerit" method="post">
+        <p>No. of Nerits</p>
+        <input name="amount" step="0.01" min="0.01" max="1000" class="w-[20vw] h-[7vh] mt-[2vh] px-[1vw] py-[2vh] border-2 border-accent-dark bg-transparent outline-none" placeholder="10" type="number">
+        <button class="flex mt-[2vh] flex-row items-center justify-center gap-2 px-[1vw] py-[2vh] border-none w-[20vw] text-[#fff] bg-accent-dark" type="submit">
+            <p>Buy</p>
+        </button>
+    </form>
+  </div>
+</div>
+
+<div class="w-[100vw] min-h-[100vh] p-[4vh]">
     <div class="topNav w-[100%] h-[10vh] flex flex-row items-center justify-between">
         <h1 class="text-5xl font-extrabold text-accent-dark">Nerit</h1>
         <div class="flex flex-row items-center justify-center gap-[3vh]">
             <% if (!wallet) { %>
-                <p class="link text-xl cursor-pointer text-accent-dark">Create Wallet</p>
+                <p onclick="window.location.href='/nerit/createWallet'" class="link text-xl cursor-pointer text-accent-dark">Create Wallet</p>
+            <% } else { %>
+                <p class="link text-xl cursor-pointer text-accent-dark">New Transaction</p>
+                <p class="link text-xl cursor-pointer text-accent-dark">Crypto Profile</p>
             <% } %>
-            <p class="link text-xl cursor-pointer text-accent-dark">Shayamk 1</p>
-            <p class="link text-xl cursor-pointer text-accent-dark">Shayamk 2</p>
         </div>
     </div>
 
-    <div class="w-[100vw] flex flex-row items-center justify-center">
-        <div id="myPlot" class="w-[40vw] h-[60vh] aspect-auto font-raleway"></div>
+    <% if (!wallet) { %>
+        <div class="w-[100vw] h-[76vh] flex flex-col text-accent-dark justify-center items-center">
+            <p class="font-semibold text-2xl">You haven't created a wallet yet.</p>
+            <button
+            onclick="window.location.href='/nerit/createWallet'"
+            class="flex mt-[2vh] flex-row items-center justify-center gap-2 px-[1vw] py-[2vh] border-none w-[9vw] text-[#fff] bg-accent-dark"
+            type="submit"
+            >
+                <p>Create One</p>
+            </button>
+        </div>
+    <% } else { %>
+
+    <div class="w-[95vw] m-auto flex flex-row justify-between gap-[2vh] mt-[5vh] mb-[5vh]">
+        <div class="flex flex-col gap-[2vh] flex-1 justify-center w-fit">
+            <div class="flex flex-row w-[100%] h-[45vh] flex-wrap items-center  p-4 rounded-3xl bg-accent-light">
+                <div class="w-[50%] p-8">
+                    <p class="text-accent-dark text-[vh]">Current Value</p>
+                    <h1 class="text-4xl font-extrabold text-accent-dark z-[100]"><span class="text-[3vh]">₹</span><%= nerit %></h1>
+                </div>
+                <div class="w-[50%] p-8">
+                    <p class="text-accent-dark text-[vh]">Nerieum (g/Nerit)</p>
+                    <h1 class="text-4xl font-extrabold text-accent-dark z-[100]">1g</h1>
+                </div>
+                <div class="w-[50%] p-8">
+                    <p class="text-accent-dark text-[vh]">Wallet Balance (Nerit)</p>
+                    <h1 class="text-4xl font-extrabold text-accent-dark z-[100]"><span class="text-[3vh]">η</span><%= wallet.money %></h1>
+                </div>
+                <div class="w-[50%] p-8">
+                    <p class="text-accent-dark text-[vh]">Wallet Balance (₹)</p>
+                    <h1 class="text-4xl font-extrabold text-accent-dark z-[100]"><span class="text-[3vh]">₹</span><%= totalMoney %></h1>
+                </div>
+            </div>
+            <div class="flex flex-col w-[100%] h-[45vh] p-9 rounded-3xl bg-periwinkle">
+                <h1 class="text-5xl font-extrabold text-accent-dark">Transactions</h1>
+                <div class="mt-5">
+                    <p>Make transactions in shop.</p>
+                </div>
+            </div>
+        </div>
+        <div class="graphs flex flex-col justify-center w-fit p-4 rounded-3xl z-[-20] bg-violet">
+            <div id="myPlot" class="w-[32vw] h-[40vh] aspect-auto z-[-10] font-raleway"></div>
+            <div id="myPlot2" class="w-[32vw] h-[40vh]  aspect-auto z-[-10] font-raleway"></div>
+        </div>
     </div>
+    <% } %>
+
 </div>
+
+<div
+  onclick="showModal()"
+  class="cursor-pointer fixed z-[100] bg-accent-dark text-background font-bold w-fit h-fit p-[2vh] bottom-[4vh] right-[4vh]"
+>
+<span class="text-xl text-accent-light">η</span>&nbsp; Buy Nerits
+</div>
+
 
 <style>
     .link {
@@ -40,9 +111,22 @@
         visibility: visible;
         width: 100%;
     }
+    #modal {
+        display: none;
+    }
 </style>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
+    function showModal() {
+        const modal = document.getElementById("modal");
+        modal.style.display = "flex";
+    }
+    function hideModal(event) {
+        const modal = document.getElementById("modal");
+        if (event.target === modal) {
+        modal.style.display = "none";
+        }
+    }
     var layout = {
         xaxis: {
             title: 'X Axis Label',
@@ -53,13 +137,17 @@
             title: 'Y Axis Label',
             showline: true
         },
-        plot_bgcolor: '#eeeefc',
-        paper_bgcolor: '#eeeefc',
+        plot_bgcolor: '#b7b7f0',
+        paper_bgcolor: '#b7b7f0',
         font: {
             family: 'Raleway',
             size: '1vw',
             color: '#11005e'
         },
+        margin: {
+            b: 40,  // bottom margin
+            t: 40,  // top margin
+        }
     };
 
     var data = [
@@ -73,9 +161,8 @@
                 size: 10
             },
             line: {
-                color: 'blue',
-                width: 2,
-                dash: 'dash'
+                color: '#11005e',
+                width: 0.5,
             },
         }
     ];
@@ -84,4 +171,5 @@
         displaylogo: false
     };
     Plotly.newPlot('myPlot', data, layout, config);
+    Plotly.newPlot('myPlot2', data, layout, config);
 </script>
