@@ -29,6 +29,7 @@ const indexRouter = require("./routers/indexRouter"),
   aiRouter = require("./routers/aiRouter"),
   auctionRouter = require("./routers/auctionRouter"),
   joinRouter = require("./routers/joinRouter"),
+  neritRouter = require("./routers/neritRouter"),
   cliRouter = require("./routers/cliRouter"),
   shopRouter = require("./routers/shopRouter");
 
@@ -63,6 +64,7 @@ app.use("/cli", ensureAuthenticated, cliRouter);
 app.use("/ai", ensureAuthenticated, aiRouter);
 app.use("/auction", ensureAuthenticated, auctionRouter);
 app.use("/join", ensureAuthenticated, joinRouter);
+app.use("/nerit", ensureAuthenticated, neritRouter);
 app.use("/shop", ensureAuthenticated, shopRouter);
 
 app.get("/logout", (req, res) => {
