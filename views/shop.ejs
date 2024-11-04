@@ -3,51 +3,26 @@
 <h1 class="text-center text-6xl font-extrabold mt-[4vh] mb-[4vh]">Marketplace</h1>
 
 <div class="objects w-[100%] flex flex-row flex-wrap justify-center items-center gap-[4vw] mr-[10%]">    
-    <div class="object w-1/5">
-        <div class="bg-indigo-300 p-6 rounded-xl flex flex-col justify-center items-center">
-          <img class="h-[25vh] mb-6" src="https://cdn-icons-png.flaticon.com/512/263/263399.png" alt="content">
-          <h2 class="text-5xl text-[#fff] font-bold mb-1">Jewel</h2>
-          <p class="text-[#fff] text-2xl">Price : $400</p>
-          <button type="submit" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Buy Now</button>
+    <% for( let i = 0; i < itemList.length; i++ ) { %>
+        <div class="object w-1/5">
+            <div class="bg-indigo-300 p-6 rounded-xl flex flex-col justify-center items-center">
+                <img class="h-[25vh] w-[25vw] object-cover mb-6" src="<%= itemList[i].image%>" alt="content">
+                <h2 class="text-3xl text-[#fff] font-bold mb-1"><%= itemList[i].product%></h2>
+                <p class="text-[#fff] text-xl">Base Price : $<%= itemList[i].biddingPrice%></p>
+                <p class="text-[#fff] text-lg"><%= itemList[i].description %></p>
+                <% if (itemList[i].live) { %>
+                    <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl" onclick="window.location.href='/auction/<%= itemList[i]._id%>'">Bid Now!</button>
+                <% } else if(itemList[i].createdBy === user.email){ %>
+                    <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl" onclick="window.location.href='/shop/live/<%= itemList[i]._id%>'">Begin Auction</button>
+                <% } else {%>
+                    <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Stay tuned!</button>
+                <% }%>
+            </div>
         </div>
+    <% } %>
+
+    <div onclick="window.location.href='/shop/add'" class="fixed bg-violet text-accent-dark font-bold w-fit h-fit p-[2vh] bottom-[5vh] right-[5vh] hover:cursor-pointer">
+        <i class="fa-solid fa-plus"></i>&nbsp;&nbsp; Add item for auction
     </div>
-    <div class="object w-1/5">
-        <div class="bg-indigo-300 p-6 rounded-xl flex flex-col justify-center items-center">
-          <img class="h-[25vh] mb-6" src="https://cdn-icons-png.flaticon.com/512/263/263399.png" alt="content">
-          <h2 class="text-5xl text-[#fff] font-bold mb-1">Jewel</h2>
-          <p class="text-[#fff] text-2xl">Price : $400</p>
-          <button type="submit" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Buy Now</button>
-        </div>
-    </div>
-    <div class="object w-1/5">
-        <div class="bg-indigo-300 p-6 rounded-xl flex flex-col justify-center items-center">
-          <img class="h-[25vh] mb-6" src="https://cdn-icons-png.flaticon.com/512/263/263399.png" alt="content">
-          <h2 class="text-5xl text-[#fff] font-bold mb-1">Jewel</h2>
-          <p class="text-[#fff] text-2xl">Price : $400</p>
-          <button type="submit" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Buy Now</button>
-        </div>
-    </div>
-    <div class="object w-1/5">
-        <div class="bg-indigo-300 p-6 rounded-xl flex flex-col justify-center items-center">
-          <img class="h-[25vh] mb-6" src="https://cdn-icons-png.flaticon.com/512/263/263399.png" alt="content">
-          <h2 class="text-5xl text-[#fff] font-bold mb-1">Jewel</h2>
-          <p class="text-[#fff] text-2xl">Price : $400</p>
-          <button type="submit" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Buy Now</button>
-        </div>
-    </div>
-    <div class="object w-1/5">
-        <div class="bg-indigo-300 p-6 rounded-xl flex flex-col justify-center items-center">
-          <img class="h-[25vh] mb-6" src="https://cdn-icons-png.flaticon.com/512/263/263399.png" alt="content">
-          <h2 class="text-5xl text-[#fff] font-bold mb-1">Jewel</h2>
-          <p class="text-[#fff] text-2xl">Price : $400</p>
-          <button type="submit" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Buy Now</button>
-        </div>
-    </div><div class="object w-1/5">
-        <div class="bg-indigo-300 p-6 rounded-xl flex flex-col justify-center items-center">
-          <img class="h-[25vh] mb-6" src="https://cdn-icons-png.flaticon.com/512/263/263399.png" alt="content">
-          <h2 class="text-5xl text-[#fff] font-bold mb-1">Jewel</h2>
-          <p class="text-[#fff] text-2xl">Price : $400</p>
-          <button type="submit" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Buy Now</button>
-        </div>
-    </div>
+    
 </div>
