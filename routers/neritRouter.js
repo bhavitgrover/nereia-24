@@ -5,13 +5,26 @@ const router = require('express').Router(),
     Block = require('../schemas/blockSchema'),
     {generateKeyPairSync} = require('crypto'),
     {createBlock} = require('../utils/blockchain/blockchain'),
+    Nerit = require('../schemas/neritSchema'),
     stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.get('/', async (req, res) => {
     // console.log(createBlock('bhavit', 'arti chopra', 100, '627890c9042459af1db065dfb465e69113c53a0e2be2c5dd12b52172e2abbf7f'))
     const reqWallet = await Wallet.findOne({mongooseId: req.user.id})
-    const nerit = Number(process.env.NERIT);
-    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: nerit})
+    const nerits = await Nerit.find()
+    let reqNerit;
+    for (let i = 0; i < nerits.length; i++) {
+        if (nerits[i].date.getDate() == new Date().getDate()) {
+            console.log('found')
+            reqNerit = nerits[i]
+        }
+    }
+    if (!reqNerit) {
+        console.log('here')
+        reqNerit = nerits[nerits.length - 1]
+    }
+    console.log(reqNerit)
+    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: reqNerit.neritValue})
 })
 
 router.get('/pay', async (req,res) => {
@@ -74,6 +87,34 @@ router.post('/buyNerit', async (req, res) => {
 router.get('/success', async (req, res) => {
     const {money} = req.query
     await Wallet.findOneAndUpdate({mongooseId: req.user.id}, {$inc: {money: money}})
+    const nerits = await Nerit.find()
+    let reqNerit;
+    for (let i = 0; i < nerits.length; i++) {
+        if (nerits[i].date.getDate() == new Date().getDate()) {
+            console.log('found')
+            reqNerit = nerits[i]
+            console.log(nerits[i])
+            console.log("req nerit id", reqNerit.id)
+            await Nerit.findOneAndUpdate({date: reqNerit.date}, {$inc: {nerits: money}})
+            console.log(money)
+            const newReqNerit = await Nerit.findOne({date: reqNerit.date})
+            console.log(newReqNerit)
+        }
+    }
+    if (!reqNerit) {
+        let prevNerit = nerits[nerits.length - 1]
+        let newValue;
+        if (prevNerit.nerits >= 50) {
+            newValue = prevNerit.neritValue + ((prevNerit.nerits - 50) * 0.02)
+        } else {
+            newValue = prevNerit.neritValue - ((50 - prevNerit.nerits) * 0.02)
+        }
+        const newNerit = new Nerit({
+            nerits: money,
+            neritValue: newValue
+        })
+        newNerit.save()
+    }
     res.redirect('/nerit')
 })
 
