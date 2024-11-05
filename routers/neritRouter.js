@@ -23,8 +23,8 @@ router.get('/', async (req, res) => {
         console.log('here')
         reqNerit = nerits[nerits.length - 1]
     }
-    console.log(reqNerit)
-    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: reqNerit.neritValue})
+    console.log(nerits)
+    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: reqNerit.neritValue, nerits: JSON.stringify(nerits)})
 })
 
 router.get('/pay', async (req,res) => {
@@ -57,7 +57,19 @@ router.get('/createWallet', (req, res) => {
 
 router.post('/buyNerit', async (req, res) => {
     const {amount} = req.body
-    const nerit = Number(process.env.NERIT)
+    const nerits = await Nerit.find()
+    let reqNerit;
+    for (let i = 0; i < nerits.length; i++) {
+        if (nerits[i].date.getDate() == new Date().getDate()) {
+            console.log('found')
+            reqNerit = nerits[i]
+        }
+    }
+    if (!reqNerit) {
+        console.log('here')
+        reqNerit = nerits[nerits.length - 1]
+    }
+    const nerit = reqNerit.neritValue
     const totalMoney = nerit * amount
     try {
         const session = await stripe.checkout.sessions.create({

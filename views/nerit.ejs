@@ -72,8 +72,9 @@
             </div>
         </div>
         <div class="graphs flex flex-col justify-center w-fit p-4 rounded-3xl bg-violet">
-            <div id="myPlot" class="w-[32vw] h-[40vh] aspect-auto font-raleway"></div>
-            <div id="myPlot2" class="w-[32vw] h-[40vh]  aspect-auto font-raleway"></div>
+            <div id="myPlot" class="w-[32vw] h-[45vh] aspect-auto font-raleway"></div>
+            <div id="myPlot2" class="w-[32vw] h-[45vh]  aspect-auto font-raleway"></div>
+            <p id="nerits"><%= nerits %></p>
         </div>
     </div>
     <% } %>
@@ -86,7 +87,6 @@
 >
 <span class="text-xl text-accent-light">η</span>&nbsp; Buy Nerits
 </div>
-
 
 <style>
     .link {
@@ -111,7 +111,7 @@
         visibility: visible;
         width: 100%;
     }
-    #modal {
+    #modal, #nerits {
         display: none;
     }
 </style>
@@ -129,13 +129,16 @@
     }
     var layout = {
         xaxis: {
-            title: 'X Axis Label',
+            title: 'Dates',
             showgrid: false,
             zeroline: true, 
         },
         yaxis: {
-            title: 'Y Axis Label',
-            showline: true
+            title: {
+                text: 'Values',
+                standoff: 5 // This controls the distance between the title and the axis labels
+            },
+            showline: true,
         },
         plot_bgcolor: '#b7b7f0',
         paper_bgcolor: '#b7b7f0',
@@ -145,15 +148,16 @@
             color: '#11005e'
         },
         margin: {
-            b: 40,  // bottom margin
-            t: 40,  // top margin
+            b: 50,
+            t: 50,
         }
     };
-
+    let nerits = JSON.parse(document.getElementById('nerits').innerText)
+    // console.log(JSON.parse(nerits))
     var data = [
         {
-            x: [1, 2, 3, 4],
-            y: [10, 15, 13, 17],
+            y: nerits.map(item => item.neritValue),
+            x: nerits.map(item => new Date(item.date).toLocaleDateString()),
             type: 'scatter',
             mode: 'lines+markers',
             marker: {
