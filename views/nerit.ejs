@@ -54,9 +54,30 @@
             </div>
             <div class="flex flex-col w-[100%] h-[45vh] p-9 rounded-3xl bg-periwinkle">
                 <h1 class="text-5xl font-extrabold text-accent-dark">Transactions</h1>
-                <div class="mt-5">
-                    <p>Make transactions in shop.</p>
-                </div>
+                <% if (!transactions) { %>
+                    <div class="mt-5">
+                        <p>Make transactions in shop.</p>
+                    </div>
+                <% } else { %>
+                    <div class="mt-5">
+                        <div class="flex flex-row justify-between items-center p-4 rounded-3xl">
+                            <p class="text-accent-dark font-bold">S.no</p>
+                            <p class="text-accent-dark font-bold">Product</p>
+                            <p class="text-accent-dark font-bold">Price (Nerits)</p>
+                            <p class="text-accent-dark font-bold">Date</p>
+                        </div>
+                        <% for (let i = 0; i < transactions.length; i++) { %>
+                            <div class="overflow-y-scroll h-[20vh] p-0">
+                                <div class="flex flex-row justify-between w-[100%] items-center p-4 rounded-3xl mb-2">
+                                    <p class="text-accent-dark"><%= i + 1 %></p>
+                                    <p class="text-accent-dark"><%= transactions[i].product %></p>
+                                    <p class="text-accent-dark">η<%= transactions[i].biddingPrice %></p>
+                                    <p class="text-accent-dark"><%= new Date(transactions[i].createdAt).toLocaleDateString() %></p>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                <% } %>
             </div>
         </div>
         <div class="graphs flex flex-col justify-center w-fit p-4 rounded-3xl bg-violet">
