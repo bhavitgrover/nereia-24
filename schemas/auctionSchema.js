@@ -10,7 +10,8 @@ const auctionSchema = mongoose.Schema({
     highestBidder: reqString,
     createdAt: { type: Date, default: Date.now },
     live:{ type: Boolean, default: false},
-    sold: { type: Boolean, default: false }
+    sold: { type: Boolean, default: false },
+    paid : { type: Boolean, default: false }
 })
 
 module.exports = mongoose.model("Auction", auctionSchema)

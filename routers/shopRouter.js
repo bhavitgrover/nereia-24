@@ -21,8 +21,8 @@ router.post('/add', async (req, res) => {
         description: description,
         price: price,
         image: image,
+        highestBidder: "None",
         biddingPrice: price,
-        highestBidder: req.user.fname,
         live:false
     })
     await item.save()

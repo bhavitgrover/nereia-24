@@ -9,19 +9,31 @@ router.get("/:id", async (req, res) => {
   const currDate = Date.now()
   const wallet = await Wallets.findOne({mongooseId:req.user._id})
   console.log(currDate)
-  if(currDate - item.createdAt <= 20000 && item.live && !item.sold){
+  if((currDate - item.createdAt <= 20000 && item.live && !item.sold) || item.highestBidder == "None"){
     console.log(item)
     res.render("auction", { title: "Auction", user: req.user, item, message:"true"});
   }
-  else if(currDate - item.createdAt > 20000 || item.sold){
+  else if((currDate - item.createdAt > 20000 || item.sold) && item.highestBidder != "None"){
     item.live = false
     item.sold = true
     await item.save()
     const user = await Users.findOne({email:item.highestBidder})
-    res.render("auction", { title: "Auction", user: req.user, message:`This auction has ended!${item.product} was sold to ${user.fname}` });
+    if(item.paid){
+      res.render("auction", { title: "Auction", user: req.user, message:`This auction has ended!${item.product} was sold to ${user.fname}` });
+    }
+    else{
+      wallet.money -= item.biddingPrice
+      await wallet.save()
+      item.paid = true
+      await item.save()
+      res.render("auction", { title: "Auction", user: req.user, message:`This auction has ended!${item.product} was sold to ${user.fname}` });
+    }
   }
   else if(!item.live){
     res.render("auction", { title: "Auction", user: req.user, message:"This auction has not started yet!" });
+  }
+  else{
+    res.send("err")
   }
 });
 
@@ -29,7 +41,7 @@ router.post("/:id/buy", async (req, res) => {
   const item = await Items.findOne({_id:req.params.id})
   const wallet = await Wallets.findOne({mongooseId:req.user._id})
   if(wallet.money < item.biddingPrice){
-    res.send(`gareeb sale paise ni h tujhpe 😠😠 bas ${wallet.money} nerit h tujhpe :joycat:`)
+    res.send(`gareeb sale paise ni h tujhpe 😠😠 bas ${wallet.money} nerit h tujhpe :joycat: sab hasso iss gareeb pe`)
   }
   else{
     item.highestBidder = req.user.email
