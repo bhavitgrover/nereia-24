@@ -1,11 +1,11 @@
 <%- layout('layout') %>
 
 
-<div id="interface" class="flex flex-row items-start justify-center w-[100vw] h-[100vh]">
+<div id="interface" class="flex flex-row items-start justify-center w-[100vw] h-[85vh]">
 
 
-  <div id="chat-left" class="w-[30vw]">
-    <div id="header-left" class="font-bold p-5 uppercase bg-accent-dark text-background flex flex-row items-center">
+  <div id="chat-left" class="w-[30vw] h-[100%] overflow-y-scroll">
+    <div id="header-left" class="font-bold p-5 uppercase bg-accent-dark text-background flex flex-row items-center overflow-y-scroll">
       <img src="/back.svg" alt="" class="w-3 mr-5 hover:cursor-pointer" onclick="location.href = location.href.split('chat')[0]">
       <h1>Chats</h1>
     </div>
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div id="chat-right" class=" w-[70vw]">
+  <div id="chat-right" class=" w-[70vw] h-[50vh] sticky">
 
     
     
@@ -39,7 +39,7 @@
 
 
             <!-- YE LEFT ME -->
-            <div class="message-container space-y-5"> <!-- This container adds vertical space between messages -->
+            <div class="message-container space-y-5"> 
                 <% messages.forEach(message => { %>
                   <% const now = new Date();
                   const messageDate = new Date(message.timestamp);
@@ -55,8 +55,7 @@
                   %>
                   <% if (message.to == user.id) { %>
                     
-                    <!-- RECEIVED MESSAGE (aligned to the left) -->
-                    <div class="flex justify-start"> <!-- Flex container aligns to start for received messages -->
+                    <div class="flex justify-start"> 
                       <div class="message-rec w-fit bg-periwinkle p-2 rounded-r-lg rounded-b-lg relative max-w-[50vw]">
                         <p class="timestamp opacity-50 absolute left-0 -top-6 w-[50vh]">
                           <%= timestampData %>
@@ -69,8 +68,7 @@
               
                   <% } else { %>
               
-                    <!-- SENT MESSAGE (aligned to the right) -->
-                    <div class="flex justify-end"> <!-- Flex container aligns to end for sent messages -->
+                    <div class="flex justify-end">
                       <div class="message-sent w-fit bg-accent-light p-2 rounded-l-lg rounded-b-lg relative max-w-[50vw]">
                         <p class="timestamp opacity-50 absolute right-0 -top-6 w-[50vh] text-right">
                           <%= timestampData %>
@@ -98,7 +96,7 @@
                     </div>
                     
                     <% }  else { %>
-                      <div id="container-center" class="text-center w-full h-[100vh]  flex flex-col items-center justify-center text-2xl">
+                      <div id="container-center" class="text-center w-full h-[100%]  flex flex-col items-center justify-center text-2xl">
                         <img src="/chat.svg" alt="" class="w-[10vw] mb-5">
                         <h1 class="opacity-70">Click a contact to start a conversation.</h1>
                       </div>

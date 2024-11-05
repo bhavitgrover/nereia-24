@@ -11,7 +11,7 @@ router.get("/:id", async (req, res) => {
   console.log(currDate)
   if((currDate - item.createdAt <= 20000 && item.live && !item.sold) || item.highestBidder == "None"){
     console.log(item)
-    res.render("auction", { title: "Auction", user: req.user, item, message:"true"});
+    res.render("auction", { title: "Auction", user: req.user, item, message:"true", wallet});
   }
   else if((currDate - item.createdAt > 20000 || item.sold) && item.highestBidder != "None"){
     item.live = false

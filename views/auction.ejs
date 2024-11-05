@@ -2,22 +2,38 @@
 
 
 <% if (message == "true") { %>
-    <h1 class="text-center text-6xl font-extrabold mt-[4vh] mb-[4vh]">Auction</h1>
     <meta http-equiv="refresh" content="5">
-    <%= item.product %>
-    <img src="<%= item.image %>" class="w-10">
-    <%= item.description %>
-    <%= item.biddingPrice%>
-    <%= item.highestBidder%>
+    
+    <div id="main" class="w-[60vw] bg-periwinkle m-auto mt-5 flex flex-col p-[5vh] rounded-lg justify-center items-center">
+        <h1 class="text-center text-5xl font-extrabold mt-[4vh] mb-[4vh]">Auction</h1>
+
+        <h1 class="text-3xl font-bold uppercase spacing tracking-wide">
+            <%= item.product %>
+        </h1>
+        <img src="<%= item.image %>" class="w-[20vw]">
+        <p>
+
+            <%= item.description %>
+        </p><br>
+        <p class="text-xl">Your current nerit balance: <span class="font-bold">η&nbsp;<%= wallet.money %></span></p>
+        <p class="text-xl">
+            Current highest bid:
+            <span class="font-bold">η&nbsp;<%= item.biddingPrice%></span>
+        </p>
+        <p class="text-xl">
+            Current highest bidder: 
+           <span class="font-bold"> <%= item.highestBidder%></span>
+        </p>
     <form action="/auction/<%=item._id%>/buy" method="post">
-        <select name="bid">
-            <option disabled selected aria-required="true">Type:</option>
+        <select name="bid" class="bg-background p-2 rounded">
+            <option disabled selected aria-required="true">Increment bid by:</option>
             <option value="1">+1</option>
             <option value="3">+3</option>
             <option value="5">+5</option>
             <option value="10">+10</option>
         </select>
-        <button type="submit">BID HIGHERRR!!!!</button>
+        <button type="submit" class="p-2 bg-accent-dark text-background rounded m-5">Increment Bid</button>
+    </div>
     </form>
 <% } else {%>
     <meta http-equiv="refresh" content="5">

@@ -5,17 +5,17 @@
 <div class="objects w-[100%] flex flex-row flex-wrap justify-center items-center gap-[4vw] mr-[10%]">    
     <% for( let i = 0; i < itemList.length; i++ ) { %>
         <div class="object w-1/5">
-            <div class="bg-indigo-300 p-6 rounded-xl flex flex-col justify-center items-center">
+            <div class="bg-periwinkle p-6 rounded-xl flex flex-col justify-center items-center">
                 <img class="h-[25vh] w-[25vw] object-cover mb-6" src="<%= itemList[i].image%>" alt="content">
-                <h2 class="text-3xl text-[#fff] font-bold mb-1"><%= itemList[i].product%></h2>
-                <p class="text-[#fff] text-xl">Base Price : η<%= itemList[i].biddingPrice%></p>
-                <p class="text-[#fff] text-lg"><%= itemList[i].description %></p>
+                <h2 class="text-3xl text-primary font-bold mb-1"><%= itemList[i].product%></h2>
+                <p class="text-primary text-xl">Base Price : η&nbsp;<%= itemList[i].biddingPrice%></p>
+                <p class="text-primary text-lg"><%= itemList[i].description %></p>
                 <% if (itemList[i].live) { %>
-                    <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl" onclick="window.location.href='/auction/<%= itemList[i]._id%>'">Bid Now!</button>
+                    <button type="button" class="bg-accent-light p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl" onclick="window.location.href='/auction/<%= itemList[i]._id%>'">Bid Now!</button>
                 <% } else if(itemList[i].createdBy === user.email){ %>
-                    <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl" onclick="window.location.href='/shop/live/<%= itemList[i]._id%>'">Begin Auction</button>
+                    <button type="button" class="bg-accent-light p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl" onclick="window.location.href='/shop/live/<%= itemList[i]._id%>'">Begin Auction</button>
                 <% } else{%>
-                    <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Stay tuned!</button>
+                    <button type="button" class="bg-accent-light p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Stay tuned!</button>
                 <% }%>
             </div>
         </div>

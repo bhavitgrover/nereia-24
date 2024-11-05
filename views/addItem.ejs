@@ -1,8 +1,16 @@
 <%- layout('layout') %>
-<form action="/shop/add" method="post">
-    <input type="text" name="name" placeholder="item name">
-    <input type="number" name="price" placeholder="price">
-    <input type="text" name="image" placeholder="img link">
-    <input type="text" name="description" placeholder="description">
-    <button type="submit">submit</button>
-</form>
+
+<div id="main" class="w-fit bg-periwinkle rounded p-[5vw] flex flex-col justify-center items-center m-auto mt-[5vw] mb-[5vw]">
+    <h1 class="text-center text-5xl font-extrabold mt-[4vh] mb-[4vh]">Add Item to Shop</h1>
+    <form action="/shop/add" method="post" class="flex flex-col gap-[1vw] w-[100%]">
+        <label for="">Item Name</label>
+        <input type="text" name="name" placeholder="Enter name" class="p-2 rounded focus:outline-none focus:translate-x-[0.5vw] duration-200">
+        <label for="">Item Price</label>
+        <input type="number" name="price" placeholder="Enter price" class="p-2 rounded focus:outline-none focus:translate-x-[0.5vw] duration-200">
+        <label for="">Item Image Link</label>
+        <input type="text" name="image" placeholder="Enter link" class="p-2 rounded focus:outline-none focus:translate-x-[0.5vw] duration-200">
+        <label for="">Item Description</label>
+        <input type="text" name="description" placeholder="Enter description" class="p-2 rounded focus:outline-none focus:translate-x-[0.5vw] duration-200">
+        <button type="submit" class="bg-accent-dark w-fit m-auto text-background p-2 rounded mt-5">Submit</button>
+    </form>
+</div>
