@@ -66,16 +66,16 @@
                             <p class="text-accent-dark font-bold">Price (Nerits)</p>
                             <p class="text-accent-dark font-bold">Date</p>
                         </div>
+                        <div class="overflow-y-scroll h-[20vh] p-0">
                         <% for (let i = 0; i < transactions.length; i++) { %>
-                            <div class="overflow-y-scroll h-[20vh] p-0">
-                                <div class="flex flex-row justify-between w-[100%] items-center p-4 rounded-3xl mb-2">
-                                    <p class="text-accent-dark"><%= i + 1 %></p>
-                                    <p class="text-accent-dark"><%= transactions[i].product %></p>
-                                    <p class="text-accent-dark">η<%= transactions[i].biddingPrice %></p>
-                                    <p class="text-accent-dark"><%= new Date(transactions[i].createdAt).toLocaleDateString() %></p>
-                                </div>
+                            <div class="flex flex-row justify-between w-[100%] items-center p-4 rounded-3xl">
+                                <p class="text-accent-dark"><%= i + 1 %></p>
+                                <p class="text-accent-dark"><%= transactions[i].product %></p>
+                                <p class="text-accent-dark">η<%= transactions[i].biddingPrice %></p>
+                                <p class="text-accent-dark"><%= new Date(transactions[i].createdAt).toLocaleDateString() %></p>
                             </div>
                         <% } %>
+                        </div>
                     </div>
                 <% } %>
             </div>
