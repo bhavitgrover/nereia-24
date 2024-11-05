@@ -70,7 +70,7 @@ router.post('/buyNerit', async (req, res) => {
         reqNerit = nerits[nerits.length - 1]
     }
     const nerit = reqNerit.neritValue
-    const totalMoney = (nerit * amount).toFixed(2)
+    const totalMoney = Math.floor(nerit * amount)
     try {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
