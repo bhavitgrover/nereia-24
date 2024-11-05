@@ -14,7 +14,7 @@
                     <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl" onclick="window.location.href='/auction/<%= itemList[i]._id%>'">Bid Now!</button>
                 <% } else if(itemList[i].createdBy === user.email){ %>
                     <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl" onclick="window.location.href='/shop/live/<%= itemList[i]._id%>'">Begin Auction</button>
-                <% } else {%>
+                <% } else{%>
                     <button type="button" class="bg-indigo-500 p-[1vw] w-[100%] mt-[2vh] text-2xl rounded-3xl">Stay tuned!</button>
                 <% }%>
             </div>

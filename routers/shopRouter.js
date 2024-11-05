@@ -4,7 +4,7 @@ const { ensureRole } = require('../utils/authenticate.js')
 
 
 router.get('/', async (req,res) => {
-    let itemList = await Items.find()
+    let itemList = await Items.find({sold:false})
     console.log(itemList)
     res.render('shop', {title: 'Marketplace', user: req.user, itemList})
 })
@@ -33,6 +33,7 @@ router.get('/live/:id', async (req,res) => {
     let item = await Items.findOne({_id:req.params.id})
     // console.log(item)
     item.live = true
+    item.createdAt = Date.now()
     await item.save()
     res.redirect('/shop')
 })
