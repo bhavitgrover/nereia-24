@@ -38,7 +38,41 @@
   </head>
 
   <body class="bg-background min-h-[100vh] w-[100vw] font-raleway text-primary">
+    <div id="nav" class="bg-background nav border-b border-accent-dark w-[100vw] h-[15vh] flex flex-row items-center justify-between px-4">
+      <h1 class="text-5xl font-extrabold text-accent-dark ml-[2vw] cursor-pointer" onclick="window.location.href='/'">Nereia</h1>
+      <div class="links flex flex-row items-center justify-center gap-[2vw] mr-[2vw]">
+        <p class="link text-xl cursor-pointer text-accent-dark" onclick="window.location.href='/nerit'">Nerits</p>
+        <p class="link text-xl cursor-pointer text-accent-dark" onclick="window.location.href='/discoveries'">Discoveries</p>
+        <p class="link text-xl cursor-pointer text-accent-dark" onclick="window.location.href='/chat'">Chats</p>
+        <p class="link text-xl cursor-pointer text-accent-dark" onclick="window.location.href='/shop'">Auctions</p>
+      </div>
+    </div>
     <%- body %>
   </body>
   <%- blocks.js %>
 </html>
+
+<style>
+  .link {
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+  }
+
+  .link::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: currentColor;
+      visibility: hidden;
+      transition: all 0.3s ease-in-out;
+  }
+
+  .link:hover::before {
+      visibility: visible;
+      width: 100%;
+  }
+</style>
