@@ -18,11 +18,12 @@ const express = require("express"),
   path = require("path"),
   MongoStore = require('connect-mongo'),
   app = express();
-
-const server = http.createServer(app);
-const io = socketIo(server);
-
-const indexRouter = require("./routers/indexRouter"),
+  
+  
+  const server = http.createServer(app);
+  const io = socketIo(server);
+  
+  const indexRouter = require("./routers/indexRouter"),
   loginRouter = require("./routers/loginRouter"),
   registerRouter = require("./routers/registerRouter"),
   chatRouter = require("./routers/chatRouter"),
@@ -33,7 +34,7 @@ const indexRouter = require("./routers/indexRouter"),
   neritRouter = require("./routers/neritRouter"),
   cliRouter = require("./routers/cliRouter"),
   shopRouter = require("./routers/shopRouter");
-  
+
 mongoose.connect(process.env.MONGO_URI, console.log("MONGODB CONNECTED"));
 
 app.use(express.static("public"));
@@ -52,13 +53,13 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI,
-        mongooseConnection: mongoose.connection,
-        ttl: 30 * 24 * 60 * 60 
+      mongoUrl: process.env.MONGO_URI,
+      mongooseConnection: mongoose.connection,
+      ttl: 30 * 24 * 60 * 60
     }),
     cookie: {
-        secure: 'auto',
-        maxAge: 30 * 24 * 60 * 60 * 1000
+      secure: 'auto',
+      maxAge: 30 * 24 * 60 * 60 * 1000
     }
   })
 );
@@ -90,7 +91,7 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", (message) => {
     console.log("message sent");
-    io.emit("receiveMessage", message); // Broadcast message to all connected clients
+    io.emit("receiveMessage", message);
     console.log("receive signal sent");
   });
 
