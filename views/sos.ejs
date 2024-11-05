@@ -1,0 +1,31 @@
+<%- layout('layout') %>
+
+<div
+  class="w-[100vw] min-h-[100vh] flex flex-col items-center justify-center gap-[2vh]"
+>
+    <% if (!sos) { %>
+        <h1 class="text-7xl font-extrabold text-accent-dark">SOS</h1>
+        <p class="w-[40vw] text-center text-sm text-[rgba(0,0,0,0.5)]">Create an SOS emergency request in case of extreme situations for the SOS team to reach to you and rescue you.</p>
+        <form action="/sos" method="post">
+            <button class="flex flex-row items-center justify-center gap-2 px-[1vw] py-[2vh] border-none text-[#fff] bg-red-600" type="submit">
+                <p class="text-2xl font-bold">CREATE AN SOS</p>
+            </button>
+        </form>
+    <% } else { %>
+        <h1 class="text-7xl font-extrabold text-accent-dark">SOS</h1>
+        <p class="w-[40vw] text-center text-sm text-[rgba(0,0,0,0.5)]">Your SOS request has been sent. Please wait for the SOS team to reach out to you.</p>
+        <div class="w-[30vw] mt-[5vh] flex flex-row items-center justify-between">
+            <p class="font-bold text-lg">Created At: </p>
+            <p class="text-lg"><%= new Date(sos.createdAt).toLocaleString() %></p>
+        </div>
+        <div class="w-[30vw] mt-[2vh] flex flex-row items-center justify-between">
+            <p class="font-bold text-lg">Progress: </p>
+            <p class="text-lg"><%= sos.progress %></p>
+        </div>
+        <form class="mt-[5vh]" action="/sos/delete" method="post">
+            <button class="flex flex-row items-center justify-center gap-2 px-[1vw] py-[2vh] border-none text-[#fff] bg-red-600" type="submit">
+                <p class="text-2xl font-bold">DELETE SOS</p>
+            </button>
+        </form>
+    <% } %>
+</div>
