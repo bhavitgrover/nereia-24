@@ -5,13 +5,13 @@
     <h1 class="text-center text-6xl font-extrabold mt-[4vh] mb-[4vh]">Auction</h1>
     <meta http-equiv="refresh" content="5">
     <%= item.product %>
-    <%= item.image %>
+    <img src="<%= item.image %>" class="w-10">
     <%= item.description %>
     <%= item.biddingPrice%>
     <%= item.highestBidder%>
     <form action="/auction/<%=item._id%>/buy" method="post">
         <select name="bid">
-            <option disabled selected>Type:</option>
+            <option disabled selected aria-required="true">Type:</option>
             <option value="1">+1</option>
             <option value="3">+3</option>
             <option value="5">+5</option>
