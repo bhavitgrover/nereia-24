@@ -11,11 +11,11 @@
                 <p class="text-primary text-xl">Base Price : η&nbsp;<%= itemList[i].biddingPrice%></p>
                 <p class="text-primary text-lg"><%= itemList[i].description %></p>
                 <% if (itemList[i].live) { %>
-                    <button type="button" class="bg-accent-light py-[1vw] w-[100%] mt-[2vh] text-2xl" onclick="window.location.href='/auction/<%= itemList[i]._id%>'">Bid Now!</button>
+                    <button type="button" class="bg-accent-light p-[1vw] w-[100%] mt-[2vh] text-2xl" onclick="window.location.href='/auction/<%= itemList[i]._id%>'">Bid Now!</button>
                 <% } else if(itemList[i].createdBy === user.email){ %>
-                    <button type="button" class="bg-accent-light py-[1vw] w-[100%] mt-[2vh] text-2xl" onclick="window.location.href='/shop/live/<%= itemList[i]._id%>'">Begin Auction</button>
+                    <button type="button" class="bg-accent-light p-[1vw] w-[100%] mt-[2vh] text-2xl" onclick="window.location.href='/shop/live/<%= itemList[i]._id%>'">Begin Auction</button>
                 <% } else{%>
-                    <button type="button" class="bg-accent-light py-[1vw] w-[100%] mt-[2vh] text-2xl">Stay tuned!</button>
+                    <button type="button" class="bg-accent-light p-[1vw] w-[100%] mt-[2vh] text-2xl">Stay tuned!</button>
                 <% }%>
             </div>
         </div>
@@ -33,7 +33,7 @@
   <div
     class="w-[40vw] bg-background rounded-lg flex flex-col items-center justify-center"
   >
-  <h1 class="text-center text-5xl font-extrabold top-0 text-accent-dark mt-5">Add Item to Shop</h1>
+  <h1 class="text-center text-5xl font-extrabold top-0 text-accent-dark mt-[5vh]">Add Item to Shop</h1>
   <form action="/shop/add" method="post" class="flex flex-col gap-[1vw] w-[100%] p-[2vw]">
       <input type="text" name="name" placeholder="Enter name" class="w-[70%] m-auto focus:outline-none border-2 border-accent-dark h-[7vh] px-[1vw] py=[2vw]">
       <input type="number" name="price" placeholder="Enter price" class="w-[70%] m-auto focus:outline-none border-2 border-accent-dark h-[7vh] px-[1vw] py=[2vw]">
