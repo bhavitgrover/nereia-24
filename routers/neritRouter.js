@@ -1,3 +1,4 @@
+
 require('dotenv').config()
 const router = require('express').Router(),
     Wallet = require('../schemas/walletSchema'),
@@ -6,6 +7,7 @@ const router = require('express').Router(),
     {generateKeyPairSync} = require('crypto'),
     {createBlock} = require('../utils/blockchain/blockchain'),
     Nerit = require('../schemas/neritSchema'),
+    Auction = require('../schemas/auctionSchema'),
     stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.get('/', async (req, res) => {
@@ -24,7 +26,9 @@ router.get('/', async (req, res) => {
         reqNerit = nerits[nerits.length - 1]
     }
     console.log(nerits)
-    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: reqNerit.neritValue, nerits: JSON.stringify(nerits)})
+    const transactions = await Auction.find({highestBidder: req.user.email})
+    console.log(transactions)
+    res.render('nerit', {user: req.user, wallet: reqWallet, nerit: reqNerit.neritValue, nerits: JSON.stringify(nerits), transactions: transactions})
 })
 
 router.get('/pay', async (req,res) => {
