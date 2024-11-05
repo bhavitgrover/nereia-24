@@ -19,18 +19,6 @@
 </div>
 
 <div class="w-[100vw] min-h-[100vh] p-[4vh]">
-    <div class="topNav w-[100%] h-[10vh] flex flex-row items-center justify-between">
-        <h1 class="text-5xl font-extrabold text-accent-dark">Nerit</h1>
-        <div class="flex flex-row items-center justify-center gap-[3vh]">
-            <% if (!wallet) { %>
-                <p onclick="window.location.href='/nerit/createWallet'" class="link text-xl cursor-pointer text-accent-dark">Create Wallet</p>
-            <% } else { %>
-                <p class="link text-xl cursor-pointer text-accent-dark">New Transaction</p>
-                <p class="link text-xl cursor-pointer text-accent-dark">Crypto Profile</p>
-            <% } %>
-        </div>
-    </div>
-
     <% if (!wallet) { %>
         <div class="w-[100vw] h-[76vh] flex flex-col text-accent-dark justify-center items-center">
             <p class="font-semibold text-2xl">You haven't created a wallet yet.</p>
@@ -44,7 +32,7 @@
         </div>
     <% } else { %>
 
-    <div class="w-[95vw] m-auto flex flex-row justify-between gap-[2vh] mt-[5vh] mb-[5vh]">
+    <div class="w-[95vw] m-auto flex flex-row justify-between gap-[2vh] mb-[5vh]">
         <div class="flex flex-col gap-[2vh] flex-1 justify-center w-fit">
             <div class="flex flex-row w-[100%] h-[45vh] flex-wrap items-center  p-4 rounded-3xl bg-accent-light">
                 <div class="w-[50%] p-8">
