@@ -123,23 +123,19 @@
     document.addEventListener('DOMContentLoaded', () => {
       const socket = io();
 
-      // Emit a new message when the user sends one
       function sendMessage(event) {
         const recID = document.getElementById('recID').value
-        socket.emit('sendMessage', recID); // Send message to server
+        socket.emit('sendMessage', recID);
         }
         
-        // Listen for new messages from the server
         socket.on('receiveMessage', (message) => {
         console.log('AAYAA EKKKKK')
-          // Only display the message if it's meant for the current user
           const userID = document.getElementById('userID').value
           if (message == userID) {
           location.reload()
         }
       });
 
-      // Attach send message function to the form submission or button
       document.getElementById('send').addEventListener('click', sendMessage, false);
     });
 
