@@ -9,6 +9,7 @@ const express = require("express"),
   {
     ensureAuthenticated,
     forwardAuthenticated,
+    ensureRole
   } = require("./utils/authenticate"),
   PORT = process.env.PORT || 5000,
   bodyParser = require("body-parser"),
@@ -78,7 +79,7 @@ app.use("/ai", ensureAuthenticated, aiRouter);
 app.use("/auction", ensureAuthenticated, auctionRouter);
 app.use("/join", ensureAuthenticated, joinRouter);
 app.use("/nerit", ensureAuthenticated, neritRouter);
-app.use("/shop", ensureAuthenticated, shopRouter);
+app.use("/shop", ensureAuthenticated, ensureRole, shopRouter);
 app.use("/sos", ensureAuthenticated, sosRouter);
 
 app.get("/logout", (req, res) => {
