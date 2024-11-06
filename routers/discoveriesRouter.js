@@ -26,6 +26,7 @@ router.post('/uploadAvatar', async (req,res) => {
     try {
         const response = await fetch(url, options);
         const result = await response.json();
+        console.log(result)
         const data = result.data;
 
         await User.findOneAndUpdate({_id:req.user._id}, {$set: {avatar:data.link}})
