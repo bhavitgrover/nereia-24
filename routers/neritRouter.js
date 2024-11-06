@@ -136,11 +136,12 @@ router.get('/success', async (req, res) => {
 })
 
 router.get("/profile/:id", async(req,res) => {
+    console.log(req.params.id)
     const userWallet = await Wallet.find({mongooseId:req.params.id})
     const user = await Users.find({_id:req.params.id})
     const transactions = await Auction.find({highestBidder: req.user.email})
     
-    res.render('neritProfile', {userWallet, user, transaction})
+    res.render('neritProfile', {userWallet, user, transactions})
 })
 
 module.exports = router
