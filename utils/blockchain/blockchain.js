@@ -50,6 +50,11 @@ async function createBlock(payer, payee, amount, prevHash, pvtKey, pubKey) {
           money: foundWallet.money - amount
         }
       })
+      await Wallet.updateOne({publicKey: payee}, {
+        $inc: {
+          money: amount
+        }
+      })
       await newBlock.save()
       return JSON.stringify({success: true})
     } else {
