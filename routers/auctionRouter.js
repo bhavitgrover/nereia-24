@@ -46,7 +46,7 @@ router.post("/:id/buy", async (req, res) => {
   const item = await Items.findOne({_id:req.params.id})
   const wallet = await Wallets.findOne({mongooseId:req.user._id})
   if(wallet.money < item.biddingPrice){
-    res.send(`gareeb sale paise ni h tujhpe 😠😠 bas ${wallet.money} nerit h tujhpe :joycat: sab hasso iss gareeb pe`)
+    res.send(`You don't have money`)
   }
   else{
     item.highestBidder = req.user.email
