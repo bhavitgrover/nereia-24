@@ -11,6 +11,11 @@ const userSchema = mongoose.Schema({
         type: String,
         default: "",
         required: false
+    },
+    lastSent: {
+        type: Number,
+        required: true,
+        default: 0
     }
 })
 

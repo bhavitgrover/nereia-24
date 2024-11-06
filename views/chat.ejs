@@ -16,7 +16,11 @@
           <div class="p-5 hover:bg-periwinkle hover:cursor-pointer flex flex-row items-center gap-5 border-b-2 border-periwinkle" onclick="location.href=location.href.split('chat')[0]+'chat/<%=chatUser.id %>'">
             
             <img src="<%= chatUser.avatar == '' ? '/pfp.svg' : chatUser.avatar %>" alt="" class="w-10 h-10 rounded-[50%]">
-            <h1><%= chatUser.fname + ' ' + chatUser.lname %></h1>
+            <% if (unreadUsers.includes(chatUser.id)) { %>
+              <h1 className="font-bold"><%= chatUser.fname + ' ' + chatUser.lname %></h1>
+            <% } else { %>
+              <h1><%= chatUser.fname + ' ' + chatUser.lname %></h1>
+            <% } %>
           </div>
           <% } %>
       <% }) %>

@@ -9,7 +9,7 @@
                 <img class="h-[25vh] w-[25vw] object-cover mb-6" src="<%= itemList[i].image%>" alt="content">
                 <h2 class="text-3xl text-primary font-bold mb-1"><%= itemList[i].product%></h2>
                 <p class="text-primary text-xl">Base Price : η&nbsp;<%= itemList[i].biddingPrice%></p>
-                <p class="text-primary text-lg"><%= itemList[i].description %></p>
+                <p class="text-primary text-lg text-center"><%= itemList[i].description %></p>
                 <% if (itemList[i].live) { %>
                     <button type="button" class="bg-accent-light p-[1vw] w-[100%] mt-[2vh] text-2xl" onclick="window.location.href='/auction/<%= itemList[i]._id%>'">Bid Now!</button>
                 <% } else if(itemList[i].createdBy === user.email){ %>
