@@ -47,12 +47,14 @@ router.post('/pay', async (req,res) => {
         lastHash = lastBlock.hash
     }
     createBlock(foundWallet.publicKey ,payeePublicKey, amount, lastHash, foundWallet.privateKey, foundWallet.publicKey)
-    .then(resp => {
+    .then(async resp => {
         const data = JSON.parse(resp)
         if (data.success) {
-            res.render('transaction',{error: 'Transaction Successful', user: req.user, wallet: foundWallet})
+            const newFoundWallet = await Wallet.findOne({mongooseId: req.user.id})
+            res.render('transaction',{error: 'Transaction Successful', user: req.user, wallet: newFoundWallet})
         } else {
-            res.render('transaction',{error: data.message, user: req.user, wallet: foundWallet})
+            const newFoundWallet = await Wallet.findOne({mongooseId: req.user.id})
+            res.render('transaction',{error: data.message, user: req.user, wallet: newFoundWallet})
         }
     })
 })
