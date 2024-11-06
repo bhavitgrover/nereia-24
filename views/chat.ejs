@@ -5,7 +5,7 @@
 
 
   <div id="chat-left" class="w-[30vw] h-[100%] overflow-y-scroll">
-    <div id="header-left" class="font-bold p-5 uppercase bg-accent-dark text-background flex flex-row items-center overflow-y-scroll">
+    <div id="header-left" class="font-bold p-5 bg-accent-dark text-background flex flex-row items-center overflow-y-scroll">
       <img src="/back.svg" alt="" class="w-3 mr-5 hover:cursor-pointer" onclick="location.href = location.href.split('chat')[0]">
       <h1>Chats</h1>
     </div>
@@ -15,7 +15,7 @@
          
           <div class="p-5 hover:bg-periwinkle hover:cursor-pointer flex flex-row items-center gap-5 border-b-2 border-periwinkle" onclick="location.href=location.href.split('chat')[0]+'chat/<%=chatUser.id %>'">
             
-            <img src="/pfp.svg" alt="" class="w-10">
+            <img src="<%= chatUser.avatar == '' ? '/pfp.svg' : chatUser.avatar %>" alt="" class="w-10 h-10 rounded-[50%]">
             <h1><%= chatUser.fname + ' ' + chatUser.lname %></h1>
           </div>
           <% } %>
@@ -23,19 +23,19 @@
     </div>
   </div>
 
-  <div id="chat-right" class=" w-[70vw] h-[50vh] sticky">
+  <div id="chat-right" class=" w-[70vw] h-[80vh] sticky">
 
     
     
     <% if (receiver!=null){ %>
-      <div id="header" class="font-semibold w-full bg-violet flex flex-row gap-5 pl-5">
-        <img src="/pfp.svg" alt="" class="w-10">
+      <div id="header" class="font-semibold w-full bg-violet flex flex-row gap-5 pl-5 items-center">
+        <img src="<%= receiver.avatar == '' ? '/pfp.svg' : receiver.avatar %>" alt="" class="w-10 h-10 rounded-[50%]">
         <h1 class="mt-5 mb-5">
           <%= receiver.fname +" "+ receiver.lname %></h1>
         </div>
 
 
-            <div class="chat p-5 h-[80vh] m-auto overflow-y-scroll" id="chat">
+            <div class="chat py-5 px-[7vh] h-[80%] m-auto overflow-y-scroll" id="chat">
 
 
             <!-- YE LEFT ME -->
@@ -85,13 +85,13 @@
               
                 </div>
 
-                <div id="input-field" class="pt-5 flex flex-col m-auto">
-                    <form action="/chat/<%= receiver.id %>" method="post" class="flex flex-row justify-center">
+                <div id="input-field" class="px-[7vh] pt-5 flex flex-col m-auto">
+                    <form action="/chat/<%= receiver.id %>" method="post" class="flex flex-row justify-center gap-[2vh] flex-grow">
 
                       <input type="hidden" name="from" value="<%= user.id %>" id="userID">
                       <input type="hidden" name="to" value="<%= receiver.id %>" id="recID">
-                        <input autofocus class="p-3 w-[50vw] bg-transparent border-2 border-accent-dark outline-none text-primary rounded-l-lg" type="text" placeholder="Type your message here.." name="content" required>
-                        <button type="submit" class="p-2 bg-accent-dark rounded-r-lg" id="send"><img src="/send.svg" class="w-6" alt=""></button>
+                        <input autofocus class="px-3 w-[100%] bg-transparent border-2 border-accent-dark outline-none text-primary " type="text" placeholder="Type your message here.." name="content" required>
+                        <button type="submit" class="p-2 bg-accent-dark h-[7vh] w-[7vh] flex flex-row justify-center items-center" id="send"><img src="/send.svg" class="w-6" alt=""></button>
                       </form>
                     </div>
                     
