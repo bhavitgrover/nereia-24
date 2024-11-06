@@ -34,7 +34,7 @@
 
     <div class="w-[95vw] m-auto flex flex-row justify-between gap-[2vh] mb-[5vh]">
         <div class="flex flex-col gap-[2vh] flex-1 justify-center w-fit">
-            <div class="flex flex-row w-[100%] h-[45vh] flex-wrap items-center  p-4 rounded-3xl bg-accent-light">
+            <div class="flex flex-row w-[100%] h-[50vh] flex-wrap items-center  p-4 rounded-3xl bg-accent-light">
                 <div class="w-[50%] p-8">
                     <p class="text-accent-dark text-[vh]">Current Value</p>
                     <h1 class="text-4xl font-extrabold text-accent-dark z-[100]"><span class="text-[3vh]">₹</span><%= nerit %></h1>
@@ -52,8 +52,11 @@
                     <h1 class="text-4xl font-extrabold text-accent-dark z-[100]"><span class="text-[3vh]">₹</span><%= (Number(nerit) * Number(wallet.money)).toFixed(2) %></h1>
                 </div>
             </div>
-            <div class="flex flex-col w-[100%] h-[45vh] p-9 rounded-3xl bg-periwinkle">
-                <h1 class="text-5xl font-extrabold text-accent-dark">Transactions</h1>
+            <div class="flex flex-col w-[100%] h-[50vh] p-9 rounded-3xl bg-periwinkle">
+                <div class="flex flex-row items-center justify-between">
+                    <h1 class="text-5xl font-extrabold text-accent-dark">Transactions</h1>
+                    <i onclick="window.location.href='/transactions'" class="text-2xl fa-solid fa-circle-plus cursor-pointer"></i>
+                </div>
                 <% if (!transactions) { %>
                     <div class="mt-5">
                         <p>Make transactions in shop.</p>

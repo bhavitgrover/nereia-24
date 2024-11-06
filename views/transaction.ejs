@@ -1,0 +1,49 @@
+<%- layout('layout') %>
+
+<div class="safedContainer w-[100vw] h-[80vh] flex flex-col items-center">
+    <h1 class="text-4xl font-extrabold text-accent-dark z-[100 mt-[4vh]">Pay</h1>
+    <form action="/nerit/pay" method="post" class="flex flex-col justify-center mt-[9vh] gap-[3vh]">
+        <div class="relative border flex flex-col w-fit">
+            <p class="text-primary break-words font-semibold">Your Public Key:</p>
+            <div onmouseover="showCopyButton()" onmouseleave="document.getElementById('copyButton').style.display='none'" class="relative border border-accent-dark px-3 py-4 text-[2vh] w-fit block">
+                <p class="w-[100%] break-words"><%= wallet.publicKey.slice(0, 33) %>...</p>
+                <i id="copyButton" class="fa-solid fa-copy absolute right-1 top-1 cursor-pointer" onclick="copyToClipboard('<%= wallet.publicKey %>')"></i>
+            </div>
+        </div>
+        <p class="font-semibold">Your wallet balance: <span class="text-accent-dark" >η<%= wallet.money %></span></p>
+        <div class="relative border flex flex-col w-fit">
+            <p class="font-semibold text">Enter Public Key of the Payee</p>
+            <input name="payeePublicKey" class="w-[20vw] h-[7vh] px-[1vw] py-[2vh] border border-accent-dark bg-transparent outline-none" placeholder="Enter public key" type="text">
+        </div>
+        <div class="relative border flex flex-col w-fit">
+            <p class="font-semibold text">Enter the amount (in nerits)</p>
+            <input name="amount"  max="1000" class="w-[20vw] h-[7vh] px-[1vw] py-[2vh] border border-accent-dark bg-transparent outline-none" placeholder="20" type="number">
+        </div>
+        <% if (error && error === 'Transaction Successful') { %>
+            <p class="w-[20vw] text-green-500 font-semibold"><%= error %></p>
+        <% } else if (error) { %>
+            <p class="w-[20vw] text-red-600 font-semibold"><%= error %></p>
+        <% } %>
+        <button class="flex mb-[4vh] flex-row font-semibold items-center justify-center gap-2 px-[1vw] py-[2vh] border-none w-[20vw] text-[#fff] bg-accent-dark" type="submit">
+            <p>Pay</p>
+        </button>
+    </form>
+</div>
+<style>
+    #copyButton {
+        display: none;
+    }
+</style>
+<script>
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            alert('Copied to clipboard');
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    }
+    function showCopyButton() {
+        document.getElementById('copyButton').style.display = 'block';
+    }
+</script>
