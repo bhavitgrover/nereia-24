@@ -59,8 +59,13 @@ router.post('/addDiscovery', async (req,res) => {
 })
 
 router.get('/:id', async (req,res) => {
-    const discovery = await Discovery.findOne({_id:req.params.id})
-    res.render('discovery', {user:req.user, discovery})
+    try {
+        const discovery = await Discovery.findOne({_id:req.params.id})
+        res.render('discovery', {user:req.user, discovery})       
+    } catch (error) {
+        console.log(error)
+        res.send('something went wrong. please try again.')
+    }
 })
 
 router.post('/delete', async (req,res) => {
