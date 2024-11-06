@@ -94,7 +94,7 @@
 
                       <input type="hidden" name="from" value="<%= user.id %>" id="userID">
                       <input type="hidden" name="to" value="<%= receiver.id %>" id="recID">
-                        <input autofocus class="px-3 w-[100%] bg-transparent border-2 border-accent-dark outline-none text-primary " type="text" placeholder="Type your message here.." name="content" required>
+                        <input autocomplete="off" autofocus class="px-3 w-[100%] bg-transparent border-2 border-accent-dark outline-none text-primary " type="text" placeholder="Type your message here.." name="content" required>
                         <button type="submit" class="p-2 bg-accent-dark h-[7vh] w-[7vh] flex flex-row justify-center items-center" id="send"><img src="/send.svg" class="w-6" alt=""></button>
                       </form>
                     </div>
